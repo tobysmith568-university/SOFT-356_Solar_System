@@ -151,10 +151,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigUtil.cpp" />
+    <ClCompile Include="ConsoleUtil.cpp" />
+    <ClCompile Include="FileUtil.cpp" />
+    <ClCompile Include="GlewUtil.cpp" />
+    <ClCompile Include="GlfwUtil.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Solar System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConfigUtil.h" />
+    <ClInclude Include="ConsoleUtil.h" />
+    <ClInclude Include="FileUtil.h" />
+    <ClInclude Include="GlewUtil.h" />
+    <ClInclude Include="GlfwUtil.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
