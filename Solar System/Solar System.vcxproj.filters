@@ -202,7 +202,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="Models\Sphere.obj">
+    <Object Include="Models\Planet.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
+    <Object Include="Models\Sun.obj">
       <Filter>Resource Files</Filter>
     </Object>
   </ItemGroup>

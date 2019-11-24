@@ -31,7 +31,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 		BindMovements();
 		CreateAndBindShaderProgram();
 		BindBackgroundColours();
-		AddModel();
+		AddSun(0.0f);
 	}
 	catch (exception ex)
 	{
@@ -117,16 +117,13 @@ void Scene::CreateAndBindShaderProgram()
 }
 
 // Adds a new model to the scene from a file
-void Scene::AddModel()
+void Scene::AddModel(string path)
 {
-	consoleUtil.ClearConsole();
-	string filename = consoleUtil.GetFileName("Enter a file name for a model");// Prompt for a model path
-
 	try
 	{
-		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(filename);// Gets the correct model loader based on the paths .extension
+		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(path);// Gets the correct model loader based on the paths .extension
 		Model newModel = Model(program);
-		ml.GetModel(newModel, filename, program);// Loads in model data using that model loader
+		ml.GetModel(newModel, path, program);// Loads in model data using that model loader
 		newModel.Init();// Inits the OpenGL code within the model
 		models.push_back(newModel);
 
@@ -140,4 +137,19 @@ void Scene::AddModel()
 	{
 		consoleUtil.Print("An unknown error occurred!");
 	}
+}
+
+void Scene::AddCustomModel()
+{
+	consoleUtil.ClearConsole();
+	string filename = consoleUtil.GetFileName("Enter a file name for a model");// Prompt for a model path
+
+	AddModel(filename);
+}
+
+void Scene::AddSun(GLfloat mass)
+{
+	string sun = "Models/sun.obj";
+
+	AddModel(sun);
 }
