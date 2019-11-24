@@ -1,63 +1,68 @@
-#include "GlfwUtil.h"
+#include "GLFWUtil.h"
+#include "GLFW/glfw3.h"
 
 using namespace std;
 
-GlfwUtil::GlfwUtil(ConfigUtil& _configUtil, InputManager& _inputManager)
-	: configUtil(_configUtil), inputManager(_inputManager)
+GLFWUtil::GLFWUtil(ConfigUtil& _configUtil, InputManager& _inputManager) : configUtil(_configUtil), inputManager(_inputManager)
 {
-	window = nullptr;
 }
 
-void GlfwUtil::Init()
+// Inits GLFW and the window
+void GLFWUtil::Init()
 {
 	glfwInit();
 
-	int windowWidth = configUtil.GetInt(IntSetting::WindowWidth);
+	int windowWidth = configUtil.GetInt(IntSetting::WindowWidth);// Gets config
 	int windowHeight = configUtil.GetInt(IntSetting::WindowHeight);
 	string windowTitle = configUtil.GetString(StringSetting::WindowTitle);
 
 	if (configUtil.GetBool(BoolSetting::FullScreenOnStartup))
 	{
-		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();// Creates a fullscreen window
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 		window = glfwCreateWindow(mode->width, mode->height, &windowTitle[0], monitor, NULL);
 	}
 	else
 	{
-		window = glfwCreateWindow(windowWidth, windowHeight, &windowTitle[0], NULL, NULL);
+		window = glfwCreateWindow(windowWidth, windowHeight, &windowTitle[0], NULL, NULL);// Creates a windowed window
 	}
 
 	glfwMakeContextCurrent(window);
 
-	inputManager.BindWindow(window);
+	inputManager.BindWindow(window);// Set the window as the current window in the input manager
 	inputManager.RegisterKeyPress(KeyBinding::Quit, [&]()
-		{
-			SetShouldClose(true);
-		});
+	{
+		SetShouldClose(true);
+	});// Create a keybinding for closing the window
 }
 
-void GlfwUtil::Update()
+// To be run every game tick
+void GLFWUtil::Update()
 {
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
 
-void GlfwUtil::WireFrameOnly()
+// Sets the polygon mode to only use wireframes
+void GLFWUtil::WireFrameOnly()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-bool GlfwUtil::GetShouldClose()
+// Returns if the window has been told to close or not
+bool GLFWUtil::GetShouldClose()
 {
 	return glfwWindowShouldClose(window);
 }
 
-void GlfwUtil::SetShouldClose(bool shouldClose)
+// Tells the window that it should or shouldn't close
+void GLFWUtil::SetShouldClose(bool shouldClose)
 {
 	glfwSetWindowShouldClose(window, shouldClose);
 }
 
-void GlfwUtil::Exit()
+// Frees resources
+void GLFWUtil::Exit()
 {
 	glfwDestroyWindow(window);
 	glfwTerminate();

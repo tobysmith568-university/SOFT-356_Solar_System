@@ -1,9 +1,9 @@
 #include "ConfigUtil.h"
+#include <string>
 
 using namespace std;
 
-ConfigUtil::ConfigUtil(FileUtil& _fileUtils)
-	: fileUtils(_fileUtils)
+ConfigUtil::ConfigUtil(FileUtil& _fileUtil) : fileUtil(_fileUtil)
 {
 	try
 	{
@@ -16,42 +16,49 @@ ConfigUtil::ConfigUtil(FileUtil& _fileUtils)
 	}
 }
 
+// Gets the value of a boolean setting from the config
 bool ConfigUtil::GetBool(BoolSetting boolSetting)
 {
 	string stringValue = config[GetBoolValue(boolSetting)];
 	return stringValue == "1";
 }
 
+// Gets the value of an int setting from the config
 int ConfigUtil::GetInt(IntSetting intSetting)
 {
 	string stringValue = config[GetIntValue(intSetting)];
 	return stoi(stringValue);
 }
 
+// Gets the value of a float setting from the config
 float ConfigUtil::GetFloat(FloatSetting floatSetting)
 {
 	string stringValue = config[GetFloatValue(floatSetting)];
 	return stof(stringValue);
 }
 
+// Gets the value of a string setting from the config
 std::string ConfigUtil::GetString(StringSetting stringSetting)
 {
 	return config[GetStringValue(stringSetting)];
 }
 
+
+// Gets the value of a keybinding from the config
 int ConfigUtil::GetKeyBinding(KeyBinding keybinding)
 {
 	string stringValue = config[GetKeyBindingValue(keybinding)];
 	return stoi(stringValue);
 }
 
+// Loads in the config data from file
 void ConfigUtil::GetConfigData()
 {
 	config = map<string, string>();
 
-	vector<string> configFile = fileUtils.ReadFileAsLines(configFileLocation);
+	vector<string> configFile = fileUtil.ReadFileAsLines(configFileLocation);// Read in the config file into lines
 
-	for (int i = 0; i < configFile.size(); i++)
+	for (int i = 0; i < configFile.size(); i++)// For every line in the file
 	{
 		string line = configFile.at(i);
 
@@ -59,48 +66,50 @@ void ConfigUtil::GetConfigData()
 		string value = "";
 		bool atEquals = false;
 
-		for (char& c : line)
+		for (char& c : line)// For every character in the line
 		{
-			if (c == '=' && !atEquals)
+			if (c == '=' && !atEquals)// If it is an equals
 			{
-				atEquals = true;
+				atEquals = true;// Declare that an equals has been found and continue the loop
 				continue;
 			}
 
-			if (!atEquals)
+			if (!atEquals)// Otherwise, either add it to the key
 			{
 				key += c;
 				continue;
 			}
 
-			value += c;
+			value += c;// Or the value
 		}
 
 		config[key] = value;
 	}
 }
 
+// Creates the config file with the default config
 void ConfigUtil::CreateDefaultConfigData()
 {
-	if (!fileUtils.DoesFileExist(configFileLocation))
+	if (!fileUtil.DoesFileExist(configFileLocation))
 	{
-		fileUtils.SaveFile(defaultFileData, configFileLocation);
+		fileUtil.SaveFile(defaultConfigFileData, configFileLocation);
 	}
 
-	fileUtils.EnsureFolderExists(defaultShaderFolder);
+	fileUtil.EnsureFolderExists(shaderFolder);
 
-	if (!fileUtils.DoesFileExist(vertexShaderLocation))
+	if (!fileUtil.DoesFileExist(vertexShaderLocation))
 	{
-		fileUtils.SaveFile(defaultVertexShaderData, vertexShaderLocation);
+		fileUtil.SaveFile(defaultVertexShaderData, vertexShaderLocation);
 	}
 
-	if (!fileUtils.DoesFileExist(fragmentShaderLocation))
+	if (!fileUtil.DoesFileExist(fragmentShaderLocation))
 	{
-		fileUtils.SaveFile(defaultFragmentShaderData, fragmentShaderLocation);
+		fileUtil.SaveFile(defaultFragmentShaderData, fragmentShaderLocation);
 	}
 }
 
-std::string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
+// Returns the matching key in the config file for the passed in bool setting enum
+string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
 {
 	switch (boolSetting)
 	{
@@ -117,7 +126,8 @@ std::string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
 	}
 }
 
-std::string ConfigUtil::GetIntValue(IntSetting intSetting)
+// Returns the matching key in the config file for the passed in int setting enum
+string ConfigUtil::GetIntValue(IntSetting intSetting)
 {
 	switch (intSetting)
 	{
@@ -130,7 +140,8 @@ std::string ConfigUtil::GetIntValue(IntSetting intSetting)
 	}
 }
 
-std::string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
+// Returns the matching key in the config file for the passed in float setting enum
+string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
 {
 	switch (floatSetting)
 	{
@@ -147,7 +158,8 @@ std::string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
 	}
 }
 
-std::string ConfigUtil::GetStringValue(StringSetting stringSetting)
+// Returns the matching key in the config file for the passed in string setting enum
+string ConfigUtil::GetStringValue(StringSetting stringSetting)
 {
 	switch (stringSetting)
 	{
@@ -162,13 +174,13 @@ std::string ConfigUtil::GetStringValue(StringSetting stringSetting)
 	}
 }
 
-std::string ConfigUtil::GetKeyBindingValue(KeyBinding keybinding)
+// Returns the matching key in the config file for the passed in key binding enum
+string ConfigUtil::GetKeyBindingValue(KeyBinding keyBinding)
 {
-	switch (keybinding)
+	switch (keyBinding)
 	{
 	case KeyBinding::Quit:
 		return "KeyBinding_Quit";
-
 	default:
 		return "";
 	}

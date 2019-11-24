@@ -1,5 +1,7 @@
 #include "ConsoleUtil.h"
 
+#include <iostream>
+
 using namespace std;
 
 ConsoleUtil::ConsoleUtil(FileUtil& _fileUtil)
@@ -7,6 +9,7 @@ ConsoleUtil::ConsoleUtil(FileUtil& _fileUtil)
 {
 }
 
+// Clears the console by printing 30 newline characters
 void ConsoleUtil::ClearConsole()
 {
 	cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl
@@ -14,14 +17,16 @@ void ConsoleUtil::ClearConsole()
 		<< endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 }
 
-void ConsoleUtil::Print(std::string message)
+// Prints a message to the console
+void ConsoleUtil::Print(string message)
 {
 	cout << message;
 }
 
-std::string ConsoleUtil::GetInput(std::string question)
+// Prints a question to the console and then prompts for an answer
+string ConsoleUtil::GetInput(string question)
 {
-	cout << endl << question << endl << arrow;
+	cout << endl << question << endl << "--> ";
 
 	string result;
 	getline(cin, result);
@@ -29,13 +34,14 @@ std::string ConsoleUtil::GetInput(std::string question)
 	return result;
 }
 
+// Prints a question to the console, and continues to prompt for an answer until the answer is a valid file path
 std::string ConsoleUtil::GetFileName(std::string question)
 {
 	string input = GetInput(question);
 	while (!fileUtil.DoesFileExist(input))
 	{
 		ClearConsole();
-		Print(fileDoesNotExist);
+		Print("File does not exist!");
 		input = GetInput(question);
 	}
 

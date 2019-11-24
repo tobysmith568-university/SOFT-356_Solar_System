@@ -2,7 +2,7 @@
 
 #include "FileUtil.h"
 
-#include <iostream>
+#include <string>
 
 class ConsoleUtil
 {
@@ -15,7 +15,4 @@ public:
 
 private:
 	FileUtil& fileUtil;
-
-	const std::string arrow = "--> ";
-	const std::string fileDoesNotExist = "File does not exist!";
 };

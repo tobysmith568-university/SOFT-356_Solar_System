@@ -1,11 +1,8 @@
 #pragma once
-
 #include "FileUtil.h"
-
-#include <map>
+#include <map> 
+#include <iterator>
 #include <string>
-#include <stdexcept>
-#include <iostream>
 
 enum class BoolSetting
 {
@@ -44,7 +41,7 @@ enum class KeyBinding
 class ConfigUtil
 {
 public:
-	ConfigUtil(FileUtil& _fileUtils);
+	ConfigUtil(FileUtil& _fileUtil);
 	bool GetBool(BoolSetting boolSetting);
 	int GetInt(IntSetting intSetting);
 	float GetFloat(FloatSetting floatSetting);
@@ -53,7 +50,7 @@ public:
 
 private:
 	std::map<std::string, std::string> config;
-	FileUtil& fileUtils;
+	FileUtil& fileUtil;
 
 	void GetConfigData();
 	void CreateDefaultConfigData();
@@ -65,8 +62,8 @@ private:
 	std::string GetKeyBindingValue(KeyBinding keybinding);
 
 	std::string configFileLocation = "config.dat";
-	std::string defaultFileData =
-		"windowWidth=800\n\
+	std::string defaultConfigFileData =
+"windowWidth=800\n\
 windowHeight=600\n\
 windowTitle=My Window\n\
 fullScreenOnStartup=0\n\
@@ -80,18 +77,47 @@ useWireframes=0\n\
 backfaceCull=0\n\
 autoRotate=0\n\
 \n\
-vertexShader=shaders/shader.vert\n\
-fragmentShader=shaders/shader.frag\n\
+vertexShader=media/shader.vert\n\
+fragmentShader=media/shader.frag\n\
 \n\
 \n\
 \n\
 KeyBinding_Quit=256";
 
-	std::string defaultShaderFolder = "shaders";
-
+	std::string shaderFolder = "shaders";
 	std::string vertexShaderLocation = "shaders/shader.vert";
-	std::string defaultVertexShaderData = "";
+	std::string defaultVertexShaderData =
+"#version 400 core\n\
+\n\
+layout(location = 0) in vec3 vPosition;\n\
+layout(location = 1) in vec4 vColour;\n\
+layout(location = 2) in vec2 aTexCoord;\n\
+uniform mat4 mvp;\n\
+	\n\
+out vec4 fragColour;\n\
+out vec2 TexCoord;\n\
+void\n\
+	main()\n\
+{\n\
+	gl_Position = mvp * vec4(vPosition, 1.0);\n\
+	fragColour = vColour;\n\
+	TexCoord = aTexCoord;\n\
+}\n\
+";
 
 	std::string fragmentShaderLocation = "shaders/shader.frag";
-	std::string defaultFragmentShaderData = "";
+	std::string defaultFragmentShaderData =
+"#version 450 core\n\
+\n\
+out vec4 fColor;\n\
+in vec4 fragColour;\n\
+in vec2 TexCoord;\n\
+\n\
+uniform sampler2D ourTexture;\n\
+\n\
+void main()\n\
+{\n\
+	fColor = texture(ourTexture, TexCoord) * fragColour;\n\
+}\n\
+";
 };

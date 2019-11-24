@@ -1,6 +1,8 @@
-#include "GlewUtil.h"
+#include "GLEWUtil.h"
+#include <GL/glew.h>
 
-void GlewUtil::Init()
+// Calls glewInit()
+void GLEWUtil::Init()
 {
 	glewInit();
 }

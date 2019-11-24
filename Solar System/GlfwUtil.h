@@ -1,12 +1,14 @@
 #pragma once
 
 #include "ConfigUtil.h"
+
+#include "GLFW/glfw3.h"
 #include "InputManager.h"
 
-class GlfwUtil
+class GLFWUtil
 {
 public:
-	GlfwUtil(ConfigUtil& _configUtil, InputManager& _inputManager);
+	GLFWUtil(ConfigUtil& _configUtil, InputManager& _inputManager);
 	void Init();
 	void Update();
 	void WireFrameOnly();

@@ -1,11 +1,17 @@
 #pragma once
 
+#include "GL/glew.h"
+#include "GLFWUtil.h"
+#include "MVPBuilder.h"
 #include "ConfigUtil.h"
+#include "Model.h"
 #include "InputManager.h"
+#include "Texture.h"
 #include "ConsoleUtil.h"
+#include "ModelLoaderFactory.h"
 
+#include <glm/glm.hpp>
 #include <vector>
-#include <GLFW\glfw3.h>
 
 class Scene
 {
@@ -25,6 +31,7 @@ private:
 	bool backfaceCull;
 
 	std::vector<Model> models;
+	GLuint activeModel;
 
 	GLuint program;
 
@@ -35,4 +42,3 @@ private:
 	void CreateAndBindShaderProgram();
 	void AddModel();
 };
-

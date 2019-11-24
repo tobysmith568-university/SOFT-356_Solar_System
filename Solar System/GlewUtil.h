@@ -1,9 +1,7 @@
 #pragma once
-
-#include <GL/glew.h>
-
-class GlewUtil
+class GLEWUtil
 {
 public:
 	void Init();
 };
+
