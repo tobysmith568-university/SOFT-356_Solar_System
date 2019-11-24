@@ -31,6 +31,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 		BindMovements();
 		CreateAndBindShaderProgram();
 		BindBackgroundColours();
+		AddModel();
 	}
 	catch (exception ex)
 	{
@@ -128,7 +129,6 @@ void Scene::AddModel()
 		ml.GetModel(newModel, filename, program);// Loads in model data using that model loader
 		newModel.Init();// Inits the OpenGL code within the model
 		models.push_back(newModel);
-		activeModel = models.size() - 1;// Sets the model as the currently active model
 
 	}
 	catch (InvalidModelFileException& ex)

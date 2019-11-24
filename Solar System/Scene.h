@@ -31,7 +31,6 @@ private:
 	bool backfaceCull;
 
 	std::vector<Model> models;
-	GLuint activeModel;
 
 	GLuint program;
 

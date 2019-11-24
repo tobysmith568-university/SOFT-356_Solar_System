@@ -136,7 +136,7 @@ void ObjModelLoader::GetModel(Model& model, std::string fileLocation, GLuint& pr
 char* ObjModelLoader::GetSingleString(std::string& line)
 {
 	char* value;
-	char* remaining;
+	char* remaining = nullptr;
 	value = strtok_s((char*)line.c_str(), " ", &remaining);// Removes the prefix
 	value = strtok_s(remaining, " ", &remaining);
 
@@ -147,7 +147,7 @@ char* ObjModelLoader::GetSingleString(std::string& line)
 void ObjModelLoader::ReadSpaceSepFloats(vector<GLfloat>& values, string& line)
 {
 	char* word;
-	char* remaining;
+	char* remaining = nullptr;
 	word = strtok_s((char*)line.c_str(), " ", &remaining);// Removes the prefix
 	word = strtok_s(remaining, " ", &remaining);
 	while (word != NULL)// While 'words' (numbers) are still being found
@@ -166,7 +166,7 @@ void ObjModelLoader::ReadFace(std::vector<Face>& faces, std::string& line, std::
 		Face face = Face();
 
 		char* word;
-		char* remaining;
+		char* remaining = nullptr;
 		word = strtok_s((char*)line.c_str(), " ", &remaining);// Removes the prefix
 		word = strtok_s(remaining, " ", &remaining);
 		while (word != NULL && count < 4)// For each group of numbers upto 4
@@ -211,7 +211,7 @@ void ObjModelLoader::ReadIndex(Face& face, char* index)
 	Index newIndex = Index();
 
 	char* word;
-	char* remaining;
+	char* remaining = nullptr;
 	word = strtok_s(index, "/", &remaining);
 	while (word != NULL)// For each number in the x/y/z
 	{
@@ -239,7 +239,7 @@ void ObjModelLoader::ReadIndex(Face& face, char* index)
 void ObjModelLoader::ReadMaterials(Model& model, string& line, string& folder)
 {
 	char* materialFileLocation;
-	char* remaining;
+	char* remaining = nullptr;
 	materialFileLocation = strtok_s((char*)line.c_str(), " ", &remaining);// Removes the prefix
 	materialFileLocation = strtok_s(remaining, " ", &remaining);
 

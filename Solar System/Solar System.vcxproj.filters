@@ -126,6 +126,9 @@
     <None Include="shaders\shader.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Models\Sphere.mtl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -197,5 +200,10 @@
     <ClCompile Include="ModelLoaderFactory.cpp">
       <Filter>Source Files\Models\Model Loading</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Models\Sphere.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
   </ItemGroup>
 </Project>
