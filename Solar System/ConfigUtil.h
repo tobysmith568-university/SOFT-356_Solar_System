@@ -1,5 +1,6 @@
 #pragma once
 #include "FileUtil.h"
+#include "Planet.h"
 #include <map> 
 #include <iterator>
 #include <string>
@@ -30,7 +31,8 @@ enum class StringSetting
 {
 	WindowTitle,
 	VertexShader,
-	FragmentShader
+	FragmentShader,
+	PlanetFile
 };
 
 enum class KeyBinding
@@ -47,12 +49,20 @@ public:
 	float GetFloat(FloatSetting floatSetting);
 	std::string GetString(StringSetting stringSetting);
 	int GetKeyBinding(KeyBinding keybinding);
+	GLfloat GetSunMass();
+	std::vector<Planet> GetPlanets();
 
 private:
 	std::map<std::string, std::string> config;
 	FileUtil& fileUtil;
 
+	GLfloat sunMass;
+	std::vector<Planet> planets;
+
 	void GetConfigData();
+	void GetPlanetData();
+	void GetPlanetFromLine(std::string line);
+	void ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::string& value);
 	void CreateDefaultConfigData();
 
 	std::string GetBoolValue(BoolSetting boolSetting);
@@ -79,6 +89,8 @@ autoRotate=0\n\
 \n\
 vertexShader=media/shader.vert\n\
 fragmentShader=media/shader.frag\n\
+\n\
+planetFile=planets.dat\n\
 \n\
 \n\
 \n\

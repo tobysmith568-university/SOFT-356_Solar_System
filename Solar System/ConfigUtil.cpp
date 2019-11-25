@@ -8,11 +8,13 @@ ConfigUtil::ConfigUtil(FileUtil& _fileUtil) : fileUtil(_fileUtil)
 	try
 	{
 		GetConfigData();
+		GetPlanetData();
 	}
 	catch (runtime_error ex)
 	{
 		CreateDefaultConfigData();
 		GetConfigData();
+		GetPlanetData();
 	}
 }
 
@@ -43,12 +45,21 @@ std::string ConfigUtil::GetString(StringSetting stringSetting)
 	return config[GetStringValue(stringSetting)];
 }
 
-
 // Gets the value of a keybinding from the config
 int ConfigUtil::GetKeyBinding(KeyBinding keybinding)
 {
 	string stringValue = config[GetKeyBindingValue(keybinding)];
 	return stoi(stringValue);
+}
+
+GLfloat ConfigUtil::GetSunMass()
+{
+	return GLfloat();
+}
+
+std::vector<Planet> ConfigUtil::GetPlanets()
+{
+	return std::vector<Planet>();
 }
 
 // Loads in the config data from file
@@ -84,6 +95,86 @@ void ConfigUtil::GetConfigData()
 		}
 
 		config[key] = value;
+	}
+}
+
+void ConfigUtil::GetPlanetData()
+{
+	string planetFileName = GetString(StringSetting::PlanetFile);
+
+	vector<string> planetFile = fileUtil.ReadFileAsLines(planetFileName);
+
+	if (planetFile.size() > 0)
+	{
+		sunMass = stof(planetFile[0]);
+	}
+
+	if (planetFile.size() < 2)
+	{
+		return;
+	}
+
+	for (size_t i = 1; i < planetFile.size(); i++)
+	{
+		GetPlanetFromLine(planetFile[i]);
+	}
+}
+
+void ConfigUtil::GetPlanetFromLine(std::string line)
+{
+	Planet newPlanet = Planet();
+
+	char* word;
+	char* remaining = nullptr;
+	word = strtok_s((char*)line.c_str(), " ", &remaining);
+	while (word != NULL)// While 'words' are still being found
+	{
+		string data = word;
+
+		bool foundEquals = false;
+		string key = "";
+		string value = "";
+
+		for (size_t i = 0; i < data.size(); i++)// Run through all the letters sorting them into the key or the value
+		{
+			if (!foundEquals && data[i] == '=')
+			{
+				foundEquals = true;
+				continue;
+			}
+			else if (!foundEquals)
+			{
+				key += data[i];
+			}
+			else
+			{
+				value += data[i];
+			}
+		}
+
+		if (key.size() > 0 && value.size() > 0)// If both a key and a value are found
+		{
+			ParsePlanetKeyValuePair(newPlanet, key, value);
+		}
+
+		word = strtok_s(remaining, " ", &remaining);
+	}
+
+	planets.push_back(newPlanet);
+}
+
+void ConfigUtil::ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::string& value)
+{
+	if (key == "name")
+	{
+		planet.SetName(value);
+		return;
+	}
+
+	if (key == "mass")
+	{
+		planet.SetMass(stof(value));
+		return;
 	}
 }
 
@@ -169,6 +260,8 @@ string ConfigUtil::GetStringValue(StringSetting stringSetting)
 		return "vertexShader";
 	case StringSetting::FragmentShader:
 		return "fragmentShader";
+	case StringSetting::PlanetFile:
+		return "planetFile";
 	default:
 		return "";
 	}

@@ -173,6 +173,7 @@
     <ClCompile Include="MVPBuilder.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjModelLoader.cpp" />
+    <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderProgramBuilder.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="MVPBuilder.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjModelLoader.h" />
+    <ClInclude Include="Planet.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderProgramBuilder.h" />
     <ClInclude Include="stb_image.h" />
@@ -210,6 +212,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="packages.config" />
+    <None Include="planets.dat" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
   </ItemGroup>

@@ -114,6 +114,9 @@
     <ClInclude Include="FileUtil.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -127,6 +130,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Models\Sphere.mtl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="planets.dat">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -199,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="ModelLoaderFactory.cpp">
       <Filter>Source Files\Models\Model Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
