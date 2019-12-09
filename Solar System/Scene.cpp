@@ -31,7 +31,14 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 		BindMovements();
 		CreateAndBindShaderProgram();
 		BindBackgroundColours();
-		AddSun(0.0f);
+
+		GLfloat sunMass = configUtil.GetSunMass();
+
+		if (sunMass > 0)
+		{
+			AddSun(sunMass);
+			AddPlanets();
+		}
 	}
 	catch (exception ex)
 	{
@@ -152,4 +159,9 @@ void Scene::AddSun(GLfloat mass)
 	string sun = "Models/sun.obj";
 
 	AddModel(sun);
+}
+
+void Scene::AddPlanets()
+{
+	vector<Planet> planets = configUtil.GetPlanets();
 }

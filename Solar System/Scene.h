@@ -42,4 +42,5 @@ private:
 	void AddModel(std::string path);
 	void AddCustomModel();
 	void AddSun(GLfloat mass);
+	void AddPlanets();
 };
