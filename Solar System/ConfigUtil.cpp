@@ -178,6 +178,12 @@ void ConfigUtil::ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::
 		planet.SetMass(stof(value));
 		return;
 	}
+
+	if (key == "radius")
+	{
+		planet.SetStartingRadius(stof(value));
+		return;
+	}
 }
 
 // Creates the config file with the default config

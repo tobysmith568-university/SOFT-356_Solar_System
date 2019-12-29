@@ -124,17 +124,29 @@ void Scene::LoadPlanets()
 
 	planets = configUtil.GetPlanets();
 
-	if (planets.size() > 0)
+	if (planets.size() == 0)
 	{
-		LoadPlanet(planets[0], sunPath);
-
-		planets[0].GetModel().GetMVPBuilder()
-			.AddScale(0.5f, 0.5f, 0.5f);
+		return;
 	}
+
+	LoadPlanet(planets[0], sunPath);
+
+	planets[0].GetModel().GetMVPBuilder()
+		.AddScale(0.5f, 0.5f, 0.5f);
+
+	GLuint sunMass = planets[0].GetMass();
 
 	for (size_t i = 1; i < planets.size(); i++)
 	{
 		LoadPlanet(planets[i], planetPath);
+
+		GLuint planetMass = planets[i].GetMass();
+		GLfloat massDifference = (GLfloat)planetMass / (GLfloat)sunMass;
+
+		planets[i].GetModel().GetMVPBuilder()
+			.AddScale(0.5f, 0.5f, 0.5f)
+			.AddScale(massDifference, massDifference, massDifference)
+			.AddTranslation(planets[i].GetStartingRadius(), 0, 0);
 	}
 }
 
