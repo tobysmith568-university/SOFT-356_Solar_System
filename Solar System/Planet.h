@@ -21,8 +21,8 @@ public:
 	GLfloat GetMass();
 	void SetMass(GLfloat _mass);
 
-	GLfloat GetStartingRadius();
-	void SetStartingRadius(GLfloat _startingRadius);
+	GLfloat GetStartingDistance();
+	void SetStartingDistance(GLfloat _startingDistance);
 
 	Model& GetModel();
 
@@ -32,7 +32,7 @@ public:
 private:
 	std::string name;
 	GLfloat mass;
-	GLfloat startingRadius;
+	GLfloat startingDistance;
 
 	Model model;
 };

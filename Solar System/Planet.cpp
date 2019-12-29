@@ -1,7 +1,7 @@
 #include "Planet.h"
 
 Planet::Planet(GLuint& _program)
-	: model(Model(_program)), mass(0), startingRadius(0)
+	: model(Model(_program)), mass(0), startingDistance(0)
 {
 }
 
@@ -30,14 +30,14 @@ void Planet::SetMass(GLfloat _mass)
 	mass = _mass;
 }
 
-GLfloat Planet::GetStartingRadius()
+GLfloat Planet::GetStartingDistance()
 {
-	return startingRadius;
+	return startingDistance;
 }
 
-void Planet::SetStartingRadius(GLfloat _startingRadius)
+void Planet::SetStartingDistance(GLfloat _startingDistance)
 {
-	startingRadius = _startingRadius;
+	startingDistance = _startingDistance;
 }
 
 Model& Planet::GetModel()

@@ -179,9 +179,9 @@ void ConfigUtil::ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::
 		return;
 	}
 
-	if (key == "radius")
+	if (key == "distance")
 	{
-		planet.SetStartingRadius(stof(value));
+		planet.SetStartingDistance(stof(value));
 		return;
 	}
 }
