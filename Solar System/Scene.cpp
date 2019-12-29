@@ -20,11 +20,10 @@ using namespace std;
 Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
 	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory)
 			: configUtil(_configUtil), fileUtil(_fileUtil), inputManager(_inputManager),
-	consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory)
+				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory)
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
 	autoRotate = configUtil.GetBool(BoolSetting::AutoRotate);
-
 	try
 	{
 		SetGlobalState();
@@ -32,12 +31,14 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 		CreateAndBindShaderProgram();
 		BindBackgroundColours();
 
+		configUtil.LoadPlanetData(program);
+
 		GLfloat sunMass = configUtil.GetSunMass();
 
 		if (sunMass > 0)
 		{
 			AddSun(sunMass);
-			AddPlanets();
+			LoadPlanets();
 		}
 	}
 	catch (exception ex)
@@ -48,20 +49,30 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 	}
 }
 
+Scene::~Scene()
+{
+	delete sun;
+}
+
 // To be run each game tick
 void Scene::Update()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clears the previous buffers
 
-	for (size_t i = 0; i < models.size(); i++)// For every model
+	if (sun != nullptr)
+	{
+		sun->Update();
+	}
+
+	for (size_t i = 0; i < planets.size(); i++)// For every planet
 	{
 		if (autoRotate)// Rotate it if necessary
 		{
-			models[i].GetMVPBuilder()
+			planets[i].GetModel().GetMVPBuilder()
 				.AddRotation(0.005f, 0.0f, 1.0f, 0.0f);
 		}
 
-		models[i].Update();// Updated the model
+		planets[i].Update();// Updated the model
 	}
 }
 
@@ -123,19 +134,23 @@ void Scene::CreateAndBindShaderProgram()
 		.BuildAndUse();
 }
 
-// Adds a new model to the scene from a file
-Model* Scene::AddModel(string path)
+void Scene::AddSun(GLfloat mass)
 {
+	string sunPath = "Models/sun.obj";
+
 	try
 	{
-		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(path);// Gets the correct model loader based on the paths .extension
-		Model newModel = Model(program);
-		ml.GetModel(newModel, path, program);// Loads in model data using that model loader
-		newModel.Init();// Inits the OpenGL code within the model
-		models.push_back(newModel);
-		return &newModel;
+		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(sunPath);// Gets the correct model loader based on the paths .extension
+
+		sun = new Planet(program);
+
+		ml.GetModel(sun->GetModel(), sunPath, program);// Loads in model data using that model loader
+		sun->GetModel().Init();// Inits the OpenGL code within the model
+
+		sun->GetModel().GetMVPBuilder()
+			.AddScale(0.2f, 0.2f, 0.2f);
 	}
-	catch (InvalidModelFileException& ex)
+	catch (InvalidModelFileException & ex)
 	{
 		string message = ex.What();// Print to console any errors
 		consoleUtil.Print(message);
@@ -144,33 +159,30 @@ Model* Scene::AddModel(string path)
 	{
 		consoleUtil.Print("An unknown error occurred!");
 	}
-	return nullptr;
 }
 
-void Scene::AddCustomModel()
+void Scene::LoadPlanets()
 {
-	consoleUtil.ClearConsole();
-	string filename = consoleUtil.GetFileName("Enter a file name for a model");// Prompt for a model path
-
-	AddModel(filename);
-}
-
-void Scene::AddSun(GLfloat mass)
-{
-	string sunPath = "Models/sun.obj";
-	AddModel(sunPath);
-
-	models[0].GetMVPBuilder()
-		.AddScale(0.1f, 0.1f, 0.1f);
-}
-
-void Scene::AddPlanets()
-{
-	vector<Planet> planets = configUtil.GetPlanets();
+	planets = configUtil.GetPlanets();
 	string planetPath = "Models/planet.obj";
 
-	for (size_t i = 0; i < planets.size(); i++)
+	try
 	{
-		AddModel(planetPath);
+		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(planetPath);// Gets the correct model loader based on the paths .extension
+
+		for (size_t i = 0; i < planets.size(); i++)
+		{
+			ml.GetModel(planets[i].GetModel(), planetPath, program);// Loads in model data using that model loader
+			planets[i].GetModel().Init();// Inits the OpenGL code within the model
+		}
+	}
+	catch (InvalidModelFileException & ex)
+	{
+		string message = ex.What();// Print to console any errors
+		consoleUtil.Print(message);
+	}
+	catch (...)// Catch any additional errors
+	{
+		consoleUtil.Print("An unknown error occurred!");
 	}
 }

@@ -8,13 +8,11 @@ ConfigUtil::ConfigUtil(FileUtil& _fileUtil) : fileUtil(_fileUtil)
 	try
 	{
 		GetConfigData();
-		GetPlanetData();
 	}
 	catch (runtime_error ex)
 	{
 		CreateDefaultConfigData();
 		GetConfigData();
-		GetPlanetData();
 	}
 }
 
@@ -98,7 +96,7 @@ void ConfigUtil::GetConfigData()
 	}
 }
 
-void ConfigUtil::GetPlanetData()
+void ConfigUtil::LoadPlanetData(GLuint& program)
 {
 	string planetFileName = GetString(StringSetting::PlanetFile);
 
@@ -116,13 +114,13 @@ void ConfigUtil::GetPlanetData()
 
 	for (size_t i = 1; i < planetFile.size(); i++)
 	{
-		GetPlanetFromLine(planetFile[i]);
+		GetPlanetFromLine(planetFile[i], program);
 	}
 }
 
-void ConfigUtil::GetPlanetFromLine(std::string line)
+void ConfigUtil::GetPlanetFromLine(std::string line, GLuint& program)
 {
-	Planet newPlanet = Planet();
+	Planet newPlanet = Planet(program);
 
 	char* word;
 	char* remaining = nullptr;

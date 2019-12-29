@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Object.h"
+#include "GL/glew.h"
+
 #include "GLFW/glfw3.h"
+#include "Object.h"
 
 #include "Texture.h"
 #include "Vertex.h"

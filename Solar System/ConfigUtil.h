@@ -1,6 +1,9 @@
 #pragma once
-#include "FileUtil.h"
+
+#include "GL/glew.h"
+
 #include "Planet.h"
+#include "FileUtil.h"
 #include <map> 
 #include <iterator>
 #include <string>
@@ -49,6 +52,7 @@ public:
 	float GetFloat(FloatSetting floatSetting);
 	std::string GetString(StringSetting stringSetting);
 	int GetKeyBinding(KeyBinding keybinding);
+	void LoadPlanetData(GLuint& program);
 	GLfloat GetSunMass();
 	std::vector<Planet> GetPlanets();
 
@@ -60,8 +64,7 @@ private:
 	std::vector<Planet> planets;
 
 	void GetConfigData();
-	void GetPlanetData();
-	void GetPlanetFromLine(std::string line);
+	void GetPlanetFromLine(std::string line, GLuint& program);
 	void ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::string& value);
 	void CreateDefaultConfigData();
 

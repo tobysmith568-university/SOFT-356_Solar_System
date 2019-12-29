@@ -1,11 +1,17 @@
 #pragma once
 
+#include "GL/glew.h"
+
 #include "GLFW/glfw3.h"
 #include <string>
+#include "Model.h"
 
 struct Planet
 {
 public:
+	Planet(GLuint& _program);
+
+	void Update();
 
 	std::string GetName();
 	void SetName(std::string _name);
@@ -13,8 +19,12 @@ public:
 	GLfloat GetMass();
 	void SetMass(GLfloat _mass);
 
+	Model& GetModel();
+
 private:
 	std::string name;
 	GLfloat mass;
+
+	Model model;
 };
 
