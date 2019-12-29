@@ -46,11 +46,52 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 void Scene::Update()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clears the previous buffers
+	
+	UpdatePositions();
 
 	for (size_t i = 0; i < planets.size(); i++)// For every planet
 	{
 		planets[i].Update();// Updated the model
 	}
+}
+
+void Scene::UpdatePositions()
+{
+	for (size_t i = 0; i < planets.size(); i++)
+	{
+		Planet* planet = &planets[i];
+
+		for (size_t ii = 0; ii < planets.size(); ii++)
+		{
+			Planet* otherPlanet = &planets[ii];
+
+			if (planet == otherPlanet)
+			{
+				continue;
+			}
+
+			GLdouble distance = planet->DistanceTo(*otherPlanet);
+			GLdouble value = (GLdouble)planet->GetMass() * (GLdouble)otherPlanet->GetMass() / distance;
+
+			if (value < numeric_limits<GLdouble>::epsilon() || value == numeric_limits<GLdouble>::infinity())
+			{
+				continue;
+			}
+
+			GLdouble force = GRAVITY * value;
+
+			vec3 vector = planet->NormalizedVectorTo(*otherPlanet);
+
+			vec3 finalForce = vector * (GLfloat)force;
+
+			planet->GetModel().GetMVPBuilder()
+				.AddTranslation(finalForce.x, finalForce.y, finalForce.z);
+
+			cout << "distance = " << distance << " value = " << value << " force = " << force << endl;
+		}
+	}
+
+	cout << "===================================================" << endl;
 }
 
 // Sets any config for OpenGL

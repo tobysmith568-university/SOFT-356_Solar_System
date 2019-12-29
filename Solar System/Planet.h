@@ -6,6 +6,8 @@
 #include <string>
 #include "Model.h"
 
+using namespace glm;
+
 struct Planet
 {
 public:
@@ -24,6 +26,9 @@ public:
 
 	Model& GetModel();
 
+	GLdouble DistanceTo(Planet& otherPlanet);
+	vec3 NormalizedVectorTo(Planet& otherPlanet);
+
 private:
 	std::string name;
 	GLfloat mass;
@@ -31,4 +36,3 @@ private:
 
 	Model model;
 };
-

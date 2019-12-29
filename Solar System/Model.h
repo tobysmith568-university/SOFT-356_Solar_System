@@ -30,6 +30,7 @@ public:
 	std::vector<Material> GetMaterials();
 
 	MVPBuilder& GetMVPBuilder();
+	glm::mat4 GetMVP();
 
 private:
 	void UseMVP(mat4 mvp);

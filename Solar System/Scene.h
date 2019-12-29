@@ -22,6 +22,9 @@ public:
 	void Update();
 
 private:
+	//const GLdouble GRAVITY = 0.000000000066742;
+	const GLdouble GRAVITY = -0.000000001066742;
+
 	ConfigUtil configUtil;
 	FileUtil fileUtil;
 	InputManager& inputManager;
@@ -34,6 +37,7 @@ private:
 
 	GLuint program;
 
+	void UpdatePositions();
 	void SetGlobalState();
 	void BindMovements();
 	void BindBackgroundColours();

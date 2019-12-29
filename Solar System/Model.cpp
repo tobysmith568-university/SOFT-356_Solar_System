@@ -72,6 +72,11 @@ MVPBuilder& Model::GetMVPBuilder()
 	return mvpBuilder;
 }
 
+glm::mat4 Model::GetMVP()
+{
+	return mvp;
+}
+
 // Sets this Model's MVP as the current one in the shader program
 void Model::UseMVP(mat4 mvp)
 {
