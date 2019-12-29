@@ -50,11 +50,6 @@ int ConfigUtil::GetKeyBinding(KeyBinding keybinding)
 	return stoi(stringValue);
 }
 
-GLfloat ConfigUtil::GetSunMass()
-{
-	return sunMass;
-}
-
 std::vector<Planet> ConfigUtil::GetPlanets()
 {
 	return planets;
@@ -104,7 +99,7 @@ void ConfigUtil::LoadPlanetData(GLuint& program)
 
 	if (planetFile.size() > 0)
 	{
-		sunMass = stof(planetFile[0]);
+		LoadSun(stof(planetFile[0]), program);
 	}
 
 	if (planetFile.size() < 2)
@@ -116,6 +111,15 @@ void ConfigUtil::LoadPlanetData(GLuint& program)
 	{
 		GetPlanetFromLine(planetFile[i], program);
 	}
+}
+
+void ConfigUtil::LoadSun(GLfloat mass, GLuint& program)
+{
+	Planet sun = Planet(program);
+	sun.SetMass(mass);
+	sun.SetName("The sun");
+
+	planets.push_back(sun);
 }
 
 void ConfigUtil::GetPlanetFromLine(std::string line, GLuint& program)

@@ -32,14 +32,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 		BindBackgroundColours();
 
 		configUtil.LoadPlanetData(program);
-
-		GLfloat sunMass = configUtil.GetSunMass();
-
-		if (sunMass > 0)
-		{
-			AddSun(sunMass);
-			LoadPlanets();
-		}
+		LoadPlanets();
 	}
 	catch (exception ex)
 	{
@@ -49,20 +42,10 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 	}
 }
 
-Scene::~Scene()
-{
-	delete sun;
-}
-
 // To be run each game tick
 void Scene::Update()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clears the previous buffers
-
-	if (sun != nullptr)
-	{
-		sun->Update();
-	}
 
 	for (size_t i = 0; i < planets.size(); i++)// For every planet
 	{
@@ -134,47 +117,35 @@ void Scene::CreateAndBindShaderProgram()
 		.BuildAndUse();
 }
 
-void Scene::AddSun(GLfloat mass)
+void Scene::LoadPlanets()
 {
 	string sunPath = "Models/sun.obj";
+	string planetPath = "Models/planet.obj";
 
-	try
+	planets = configUtil.GetPlanets();
+
+	if (planets.size() > 0)
 	{
-		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(sunPath);// Gets the correct model loader based on the paths .extension
+		LoadPlanet(planets[0], sunPath);
 
-		sun = new Planet(program);
-
-		ml.GetModel(sun->GetModel(), sunPath, program);// Loads in model data using that model loader
-		sun->GetModel().Init();// Inits the OpenGL code within the model
-
-		sun->GetModel().GetMVPBuilder()
-			.AddScale(0.2f, 0.2f, 0.2f);
+		planets[0].GetModel().GetMVPBuilder()
+			.AddScale(0.5f, 0.5f, 0.5f);
 	}
-	catch (InvalidModelFileException & ex)
+
+	for (size_t i = 1; i < planets.size(); i++)
 	{
-		string message = ex.What();// Print to console any errors
-		consoleUtil.Print(message);
-	}
-	catch (...)// Catch any additional errors
-	{
-		consoleUtil.Print("An unknown error occurred!");
+		LoadPlanet(planets[i], planetPath);
 	}
 }
 
-void Scene::LoadPlanets()
+void Scene::LoadPlanet(Planet& planet, string modelPath)
 {
-	planets = configUtil.GetPlanets();
-	string planetPath = "Models/planet.obj";
-
 	try
 	{
-		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(planetPath);// Gets the correct model loader based on the paths .extension
+		IModelLoader& ml = modelLoaderFactory.GetLoaderForFile(modelPath);// Gets the correct model loader based on the paths .extension
 
-		for (size_t i = 0; i < planets.size(); i++)
-		{
-			ml.GetModel(planets[i].GetModel(), planetPath, program);// Loads in model data using that model loader
-			planets[i].GetModel().Init();// Inits the OpenGL code within the model
-		}
+		ml.GetModel(planet.GetModel(), modelPath, program);// Loads in model data using that model loader
+		planet.GetModel().Init();// Inits the OpenGL code within the model
 	}
 	catch (InvalidModelFileException & ex)
 	{

@@ -53,18 +53,17 @@ public:
 	std::string GetString(StringSetting stringSetting);
 	int GetKeyBinding(KeyBinding keybinding);
 	void LoadPlanetData(GLuint& program);
-	GLfloat GetSunMass();
 	std::vector<Planet> GetPlanets();
 
 private:
 	std::map<std::string, std::string> config;
 	FileUtil& fileUtil;
 
-	GLfloat sunMass;
 	std::vector<Planet> planets;
 
 	void GetConfigData();
 	void GetPlanetFromLine(std::string line, GLuint& program);
+	void LoadSun(GLfloat mass, GLuint& program);
 	void ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::string& value);
 	void CreateDefaultConfigData();
 

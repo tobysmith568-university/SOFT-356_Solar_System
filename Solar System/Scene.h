@@ -18,7 +18,6 @@ class Scene
 public:
 	Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
 		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory);
-	~Scene();
 
 	void Update();
 
@@ -32,7 +31,6 @@ private:
 	bool autoRotate;
 	bool backfaceCull;
 
-	Planet* sun;
 	std::vector<Planet> planets;
 
 	GLuint program;
@@ -42,6 +40,6 @@ private:
 	void BindBackgroundColours();
 	float NormalizeColour(float colour);
 	void CreateAndBindShaderProgram();
-	void AddSun(GLfloat mass);
 	void LoadPlanets();
+	void LoadPlanet(Planet& planet, std::string modelPath);
 };
