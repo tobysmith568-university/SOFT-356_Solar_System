@@ -10,7 +10,6 @@ backgroundA=1
 
 useWireframes=0
 backfaceCull=0
-autoRotate=0
 
 vertexShader=shaders/shader.vert
 fragmentShader=shaders/shader.frag

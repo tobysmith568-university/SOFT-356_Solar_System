@@ -28,7 +28,6 @@ private:
 	ConsoleUtil consoleUtil;
 	ModelLoaderFactory modelLoaderFactory;
 
-	bool autoRotate;
 	bool backfaceCull;
 
 	std::vector<Planet> planets;

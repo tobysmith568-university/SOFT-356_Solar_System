@@ -12,7 +12,6 @@ enum class BoolSetting
 {
 	UseWireframes,
 	BackfaceCull,
-	AutoRotate,
 	FullScreenOnStartup
 };
 
@@ -87,7 +86,6 @@ backgroundA=1\n\
 \n\
 useWireframes=0\n\
 backfaceCull=0\n\
-autoRotate=0\n\
 \n\
 vertexShader=media/shader.vert\n\
 fragmentShader=media/shader.frag\n\

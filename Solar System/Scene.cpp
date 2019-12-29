@@ -23,7 +23,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory)
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
-	autoRotate = configUtil.GetBool(BoolSetting::AutoRotate);
+
 	try
 	{
 		SetGlobalState();
@@ -49,12 +49,6 @@ void Scene::Update()
 
 	for (size_t i = 0; i < planets.size(); i++)// For every planet
 	{
-		if (autoRotate)// Rotate it if necessary
-		{
-			planets[i].GetModel().GetMVPBuilder()
-				.AddRotation(0.005f, 0.0f, 1.0f, 0.0f);
-		}
-
 		planets[i].Update();// Updated the model
 	}
 }

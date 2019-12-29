@@ -216,8 +216,6 @@ string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
 		return "useWireframes";
 	case BoolSetting::BackfaceCull:
 		return "backfaceCull";
-	case BoolSetting::AutoRotate:
-		return "autoRotate";
 	case BoolSetting::FullScreenOnStartup:
 		return "fullScreenOnStartup";
 	default:
