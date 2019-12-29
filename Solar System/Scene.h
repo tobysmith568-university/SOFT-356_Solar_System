@@ -39,7 +39,7 @@ private:
 	void BindBackgroundColours();
 	float NormalizeColour(float colour);
 	void CreateAndBindShaderProgram();
-	void AddModel(std::string path);
+	Model* AddModel(std::string path);
 	void AddCustomModel();
 	void AddSun(GLfloat mass);
 	void AddPlanets();

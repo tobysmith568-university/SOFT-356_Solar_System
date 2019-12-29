@@ -124,7 +124,7 @@ void Scene::CreateAndBindShaderProgram()
 }
 
 // Adds a new model to the scene from a file
-void Scene::AddModel(string path)
+Model* Scene::AddModel(string path)
 {
 	try
 	{
@@ -133,7 +133,7 @@ void Scene::AddModel(string path)
 		ml.GetModel(newModel, path, program);// Loads in model data using that model loader
 		newModel.Init();// Inits the OpenGL code within the model
 		models.push_back(newModel);
-
+		return &newModel;
 	}
 	catch (InvalidModelFileException& ex)
 	{
@@ -144,6 +144,7 @@ void Scene::AddModel(string path)
 	{
 		consoleUtil.Print("An unknown error occurred!");
 	}
+	return nullptr;
 }
 
 void Scene::AddCustomModel()
@@ -156,12 +157,20 @@ void Scene::AddCustomModel()
 
 void Scene::AddSun(GLfloat mass)
 {
-	string sun = "Models/sun.obj";
+	string sunPath = "Models/sun.obj";
+	AddModel(sunPath);
 
-	AddModel(sun);
+	models[0].GetMVPBuilder()
+		.AddScale(0.1f, 0.1f, 0.1f);
 }
 
 void Scene::AddPlanets()
 {
 	vector<Planet> planets = configUtil.GetPlanets();
+	string planetPath = "Models/planet.obj";
+
+	for (size_t i = 0; i < planets.size(); i++)
+	{
+		AddModel(planetPath);
+	}
 }

@@ -54,12 +54,12 @@ int ConfigUtil::GetKeyBinding(KeyBinding keybinding)
 
 GLfloat ConfigUtil::GetSunMass()
 {
-	return GLfloat();
+	return sunMass;
 }
 
 std::vector<Planet> ConfigUtil::GetPlanets()
 {
-	return std::vector<Planet>();
+	return planets;
 }
 
 // Loads in the config data from file
