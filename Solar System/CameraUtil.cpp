@@ -3,14 +3,14 @@
 
 using namespace glm;
 
-CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil)
+CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigUtil& _configUtil)
 	: inputManager(_inputManager), timeUtil(_timeUtil)
 {
 	cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	cameraSpeed = 1.5f;
+	cameraSpeed = _configUtil.GetFloat(FloatSetting::MovementSpeed);
 
 	SetUpKeyPresses();
 }

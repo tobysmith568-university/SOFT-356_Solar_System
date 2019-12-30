@@ -152,6 +152,8 @@ string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
 		return "backgroundB";
 	case FloatSetting::BackgroundA:
 		return "backgroundA";
+	case FloatSetting::MovementSpeed:
+		return "movementSpeed";
 	default:
 		return "";
 	}

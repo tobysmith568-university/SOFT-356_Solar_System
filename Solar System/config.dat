@@ -11,6 +11,8 @@ backgroundA=1
 useWireframes=0
 backfaceCull=0
 
+movementSpeed=1.5
+
 vertexShader=shaders/shader.vert
 fragmentShader=shaders/shader.frag
 

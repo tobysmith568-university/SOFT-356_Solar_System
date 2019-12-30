@@ -9,7 +9,7 @@
 class CameraUtil
 {
 public:
-	CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil);
+	CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigUtil& _configUtil);
 
 	glm::mat4 GetView();
 
