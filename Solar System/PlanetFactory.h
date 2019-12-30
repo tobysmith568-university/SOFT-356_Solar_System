@@ -20,9 +20,9 @@ public:
 	std::vector<Planet> CreateSolarSystem(GLuint& program);
 
 private:
-	CameraUtil cameraUtil;
-	ConfigUtil configUtil;
-	FileUtil fileUtil;
+	CameraUtil& cameraUtil;
+	ConfigUtil& configUtil;
+	FileUtil& fileUtil;
 
 	void LoadSun(std::vector<Planet>& planets, GLfloat mass, GLuint& program);
 	void GetPlanetFromLine(std::vector<Planet>& planets, std::string line, GLuint& program);

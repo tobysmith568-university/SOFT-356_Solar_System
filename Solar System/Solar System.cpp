@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 		ConsoleUtil consoleUtil = ConsoleUtil(fileUtil);
 		ConfigUtil configUtil = ConfigUtil(fileUtil);
 		InputManager inputManager = InputManager(configUtil);
-		CameraUtil cameraUtil = CameraUtil();
+		CameraUtil cameraUtil = CameraUtil(inputManager);
 		PlanetFactory planetFactory = PlanetFactory(cameraUtil, configUtil, fileUtil);
 		ModelLoaderFactory modelLoaderFactory = ModelLoaderFactory(fileUtil, consoleUtil);
 		GLFWUtil glfwUtil = GLFWUtil(configUtil, inputManager);

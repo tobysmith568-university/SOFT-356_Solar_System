@@ -180,6 +180,14 @@ string ConfigUtil::GetKeyBindingValue(KeyBinding keyBinding)
 {
 	switch (keyBinding)
 	{
+	case KeyBinding::MoveForward:
+		return "KeyBinding_MoveForward";
+	case KeyBinding::MoveBackward:
+		return "KeyBinding_MoveBackward";
+	case KeyBinding::MoveLeft:
+		return "KeyBinding_MoveLeft";
+	case KeyBinding::MoveRight:
+		return "KeyBinding_MoveRight";
 	case KeyBinding::Quit:
 		return "KeyBinding_Quit";
 	default:

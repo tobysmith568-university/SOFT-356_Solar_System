@@ -38,6 +38,10 @@ enum class StringSetting
 
 enum class KeyBinding
 {
+	MoveForward,
+	MoveBackward,
+	MoveLeft,
+	MoveRight,
 	Quit
 };
 

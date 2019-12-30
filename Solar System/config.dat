@@ -19,3 +19,7 @@ planetFile=planets.dat
 
 
 KeyBinding_Quit=256
+KeyBinding_MoveForward=87
+KeyBinding_MoveBackward=83
+KeyBinding_MoveLeft=65
+KeyBinding_MoveRight=68
