@@ -14,11 +14,12 @@
 #include "ConsoleUtil.h"
 #include "ModelLoaderFactory.h"
 #include "PlanetFactory.h"
+#include "TimeUtil.h"
 
 using namespace std;
 
 void RunScene(FileUtil& fileUtil, ConsoleUtil& consoleUtil, ConfigUtil& configUtil, InputManager& inputManager,
-	ModelLoaderFactory& modelLoaderFactory, PlanetFactory& planetFactory, GLFWUtil& glfwUtil, GLEWUtil& glewUtil);
+	ModelLoaderFactory& modelLoaderFactory, PlanetFactory& planetFactory, GLFWUtil& glfwUtil, GLEWUtil& glewUtil, TimeUtil& timeUtil);
 
 // Main method
 int main(int argc, char** argv)
@@ -26,16 +27,17 @@ int main(int argc, char** argv)
 	try
 	{
 		FileUtil fileUtil = FileUtil();// Init dependencies
+		TimeUtil timeUtil = TimeUtil();
 		ConsoleUtil consoleUtil = ConsoleUtil(fileUtil);
 		ConfigUtil configUtil = ConfigUtil(fileUtil);
 		InputManager inputManager = InputManager(configUtil);
-		CameraUtil cameraUtil = CameraUtil(inputManager);
+		CameraUtil cameraUtil = CameraUtil(inputManager, timeUtil);
 		PlanetFactory planetFactory = PlanetFactory(cameraUtil, configUtil, fileUtil);
 		ModelLoaderFactory modelLoaderFactory = ModelLoaderFactory(fileUtil, consoleUtil);
 		GLFWUtil glfwUtil = GLFWUtil(configUtil, inputManager);
 		GLEWUtil glewUtil = GLEWUtil();
 
-		RunScene(fileUtil, consoleUtil, configUtil, inputManager, modelLoaderFactory, planetFactory, glfwUtil, glewUtil);// Run a scene
+		RunScene(fileUtil, consoleUtil, configUtil, inputManager, modelLoaderFactory, planetFactory, glfwUtil, glewUtil, timeUtil);// Run a scene
 	}
 	catch (exception ex)
 	{
@@ -51,7 +53,7 @@ int main(int argc, char** argv)
 }
 
 void RunScene(FileUtil& fileUtil, ConsoleUtil& consoleUtil, ConfigUtil& configUtil, InputManager& inputManager,
-	ModelLoaderFactory& modelLoaderFactory, PlanetFactory& planetFactory, GLFWUtil& glfwUtil, GLEWUtil& glewUtil)
+	ModelLoaderFactory& modelLoaderFactory, PlanetFactory& planetFactory, GLFWUtil& glfwUtil, GLEWUtil& glewUtil, TimeUtil& timeUtil)
 {
 	consoleUtil.ClearConsole();
 
@@ -59,7 +61,7 @@ void RunScene(FileUtil& fileUtil, ConsoleUtil& consoleUtil, ConfigUtil& configUt
 
 	glewUtil.Init();
 	
-	Scene scene = Scene(configUtil, fileUtil, inputManager, consoleUtil, modelLoaderFactory, planetFactory);
+	Scene scene = Scene(configUtil, fileUtil, inputManager, consoleUtil, modelLoaderFactory, planetFactory, timeUtil);
 
 	bool wireframesOnly = configUtil.GetBool(BoolSetting::UseWireframes);
 	while (!glfwUtil.GetShouldClose())// Loop while the window has not been told to close

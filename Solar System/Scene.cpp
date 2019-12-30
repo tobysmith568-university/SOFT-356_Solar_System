@@ -18,9 +18,9 @@
 using namespace std;
 
 Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
-	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory)
+	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory, TimeUtil& _timeUtil)
 			: configUtil(_configUtil), fileUtil(_fileUtil), inputManager(_inputManager),
-				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory), planetFactory(_planetFactory)
+				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory), planetFactory(_planetFactory), timeUtil(_timeUtil)
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
 
@@ -43,6 +43,8 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 // To be run each game tick
 void Scene::Update()
 {
+	timeUtil.Update();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clears the previous buffers
 	
 	UpdatePositions();

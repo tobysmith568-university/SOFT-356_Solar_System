@@ -18,7 +18,7 @@ class Scene
 {
 public:
 	Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
-		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory);
+		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory, TimeUtil& _timeUtil);
 
 	void Update();
 
@@ -31,6 +31,7 @@ private:
 	ConsoleUtil consoleUtil;
 	ModelLoaderFactory modelLoaderFactory;
 	PlanetFactory& planetFactory;
+	TimeUtil& timeUtil;
 
 	bool backfaceCull;
 

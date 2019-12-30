@@ -3,14 +3,14 @@
 
 using namespace glm;
 
-CameraUtil::CameraUtil(InputManager& _inputManager)
-	: inputManager(_inputManager)
+CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil)
+	: inputManager(_inputManager), timeUtil(_timeUtil)
 {
 	cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	cameraSpeed = 0.02f;
+	cameraSpeed = 1.5f;
 
 	SetUpKeyPresses();
 }
@@ -24,21 +24,21 @@ void CameraUtil::SetUpKeyPresses()
 {
 	inputManager.RegisterKeyRepeat(KeyBinding::MoveForward, [&]()
 		{
-			cameraPos += cameraSpeed * cameraFront;
+			cameraPos += cameraSpeed * cameraFront * timeUtil.GetDeltaTime();
 		});
 
 	inputManager.RegisterKeyRepeat(KeyBinding::MoveBackward, [&]()
 		{
-			cameraPos -= cameraSpeed * cameraFront;
+			cameraPos -= cameraSpeed * cameraFront * timeUtil.GetDeltaTime();
 		});
 
 	inputManager.RegisterKeyRepeat(KeyBinding::MoveLeft, [&]()
 		{
-			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * timeUtil.GetDeltaTime();
 		});
 
 	inputManager.RegisterKeyRepeat(KeyBinding::MoveRight, [&]()
 		{
-			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * timeUtil.GetDeltaTime();
 		});
 }
