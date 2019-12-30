@@ -70,9 +70,17 @@ void Scene::UpdatePositions()
 				continue;
 			}
 
-			GLdouble distance = planet->DistanceTo(*otherPlanet);
-			GLdouble value = (GLdouble)planet->GetMass() * (GLdouble)otherPlanet->GetMass() / distance;
+			GLdouble planetaryDistance = planet->DistanceTo(*otherPlanet);
+			GLdouble planetaryDistanceSquared = planetaryDistance * planetaryDistance;
+			GLdouble planet1Mass = (GLdouble)planet->GetMass();
+			GLdouble planet2Mass = (GLdouble)otherPlanet->GetMass();
 
+			if (planetaryDistance < planet->GetRadiusPercentage() + otherPlanet->GetRadiusPercentage())
+			{
+				continue;
+			}
+
+			GLdouble value = (planet1Mass * planet2Mass) / planetaryDistanceSquared;
 			if (value < numeric_limits<GLdouble>::epsilon() || value == numeric_limits<GLdouble>::infinity())
 			{
 				continue;
@@ -82,16 +90,21 @@ void Scene::UpdatePositions()
 
 			vec3 vector = planet->NormalizedVectorTo(*otherPlanet);
 
-			vec3 finalForce = vector * (GLfloat)force;
+			vec3 forceVector = vector * (GLfloat)force;
+
+			vec3 acceleration = forceVector / planet->GetMass();
+
+			vec3 velocity = planet->GetVelocity() + acceleration;
+			planet->SetVelocity(velocity);
 
 			planet->GetModel().GetMVPBuilder()
-				.AddTranslation(finalForce.x, finalForce.y, finalForce.z);
+				.AddTranslation(velocity.x, velocity.y, velocity.z);
 
-			cout << "distance = " << distance << " value = " << value << " force = " << force << endl;
+			std::cout << "force = " << force << endl;
 		}
 	}
 
-	cout << "===================================================" << endl;
+	std::cout << "===================================================" << endl;
 }
 
 // Sets any config for OpenGL
@@ -169,19 +182,16 @@ void Scene::LoadPlanets()
 	planets[0].GetModel().GetMVPBuilder()
 		.AddScale(0.5f, 0.5f, 0.5f);
 
-	GLuint sunMass = planets[0].GetMass();
-
 	for (size_t i = 1; i < planets.size(); i++)
 	{
 		LoadPlanet(planets[i], planetPath);
 
-		GLuint planetMass = planets[i].GetMass();
-		GLfloat massDifference = (GLfloat)planetMass / (GLfloat)sunMass;
+		GLfloat radiusScale = planets[i].GetRadiusPercentage();
 
 		planets[i].GetModel().GetMVPBuilder()
 			.AddScale(0.5f, 0.5f, 0.5f)
-			.AddScale(massDifference, massDifference, massDifference)
-			.AddTranslation(planets[i].GetStartingRadius(), 0, 0);
+			.AddScale(radiusScale, radiusScale, radiusScale)
+			.AddTranslation(planets[i].GetStartingDistance(), 0, 0);
 	}
 }
 

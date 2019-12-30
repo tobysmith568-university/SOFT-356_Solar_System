@@ -184,6 +184,12 @@ void ConfigUtil::ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::
 		planet.SetStartingDistance(stof(value));
 		return;
 	}
+
+	if (key == "radius")
+	{
+		planet.SetRadiusPercentage(stof(value));
+		return;
+	}
 }
 
 // Creates the config file with the default config

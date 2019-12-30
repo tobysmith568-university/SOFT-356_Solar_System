@@ -24,6 +24,12 @@ public:
 	GLfloat GetStartingDistance();
 	void SetStartingDistance(GLfloat _startingDistance);
 
+	GLfloat GetRadiusPercentage();
+	void SetRadiusPercentage(GLfloat _radiusPercentage);
+
+	glm::vec3 GetVelocity();
+	void SetVelocity(glm::vec3 _velocity);
+
 	Model& GetModel();
 
 	GLdouble DistanceTo(Planet& otherPlanet);
@@ -33,6 +39,9 @@ private:
 	std::string name;
 	GLfloat mass;
 	GLfloat startingDistance;
+	GLfloat radiusPercentage;
+
+	glm::vec3 velocity;
 
 	Model model;
 };

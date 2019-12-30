@@ -22,8 +22,7 @@ public:
 	void Update();
 
 private:
-	//const GLdouble GRAVITY = 0.000000000066742;
-	const GLdouble GRAVITY = -0.000000001066742;
+	const GLdouble GRAVITY = 0.00000000006674;
 
 	ConfigUtil configUtil;
 	FileUtil fileUtil;

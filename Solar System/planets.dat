@@ -1,3 +1,3 @@
-500
-name=something mass=60 distance=0.5
-name=earth mass=180 distance=1
+5000
+name=something mass=60 distance=0.5 radius=0.2
+name=earth mass=180 distance=1 radius=0.2
