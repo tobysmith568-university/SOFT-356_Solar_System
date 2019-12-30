@@ -2,11 +2,11 @@
 
 using namespace std;
 
-Model::Model(GLuint& _program)
-	: program(_program)
+Model::Model(CameraUtil& _cameraUtil, GLuint& _program)
+	: program(_program), mvpBuilder(_cameraUtil)
 {
 	// Create an MVP builder with some default values
-	mvpBuilder = MVPBuilder()
+	mvpBuilder
 		.AddScale(1.0f, 1.0f, 1.0f)
 		.AddTranslation(0.0f, 0.0f, 0.0f);
 

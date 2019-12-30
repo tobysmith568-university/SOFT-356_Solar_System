@@ -1,7 +1,7 @@
 #include "Planet.h"
 
-Planet::Planet(GLuint& _program)
-	: model(Model(_program)), mass(0), startingDistance(0), radiusPercentage(0), velocity(vec3(0.0f))
+Planet::Planet(CameraUtil& _cameraUtil, GLuint& _program)
+	: model(_cameraUtil, _program), mass(0), startingDistance(0), radiusPercentage(0), velocity(vec3(0.0f))
 {
 }
 

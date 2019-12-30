@@ -11,7 +11,7 @@ using namespace glm;
 struct Planet
 {
 public:
-	Planet(GLuint& _program);
+	Planet(CameraUtil& _cameraUtil, GLuint& _program);
 
 	void Update();
 

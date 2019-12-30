@@ -87,7 +87,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -154,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraUtil.cpp" />
     <ClCompile Include="ConfigUtil.cpp" />
     <ClCompile Include="ConsoleUtil.cpp" />
     <ClCompile Include="Face.cpp" />
@@ -173,6 +173,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjModelLoader.cpp" />
     <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="PlanetFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderProgramBuilder.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraUtil.h" />
     <ClInclude Include="ConfigUtil.h" />
     <ClInclude Include="ConsoleUtil.h" />
     <ClInclude Include="Face.h" />
@@ -199,6 +201,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjModelLoader.h" />
     <ClInclude Include="Planet.h" />
+    <ClInclude Include="PlanetFactory.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderProgramBuilder.h" />
     <ClInclude Include="stb_image.h" />

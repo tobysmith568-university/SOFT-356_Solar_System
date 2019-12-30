@@ -3,7 +3,9 @@
 
 using namespace std;
 
-ConfigUtil::ConfigUtil(FileUtil& _fileUtil) : fileUtil(_fileUtil)
+
+ConfigUtil::ConfigUtil(FileUtil& _fileUtil)
+	: fileUtil(_fileUtil)
 {
 	try
 	{
@@ -50,11 +52,6 @@ int ConfigUtil::GetKeyBinding(KeyBinding keybinding)
 	return stoi(stringValue);
 }
 
-std::vector<Planet> ConfigUtil::GetPlanets()
-{
-	return planets;
-}
-
 // Loads in the config data from file
 void ConfigUtil::GetConfigData()
 {
@@ -88,107 +85,6 @@ void ConfigUtil::GetConfigData()
 		}
 
 		config[key] = value;
-	}
-}
-
-void ConfigUtil::LoadPlanetData(GLuint& program)
-{
-	string planetFileName = GetString(StringSetting::PlanetFile);
-
-	vector<string> planetFile = fileUtil.ReadFileAsLines(planetFileName);
-
-	if (planetFile.size() > 0)
-	{
-		LoadSun(stof(planetFile[0]), program);
-	}
-
-	if (planetFile.size() < 2)
-	{
-		return;
-	}
-
-	for (size_t i = 1; i < planetFile.size(); i++)
-	{
-		GetPlanetFromLine(planetFile[i], program);
-	}
-}
-
-void ConfigUtil::LoadSun(GLfloat mass, GLuint& program)
-{
-	Planet sun = Planet(program);
-	sun.SetMass(mass);
-	sun.SetName("The sun");
-
-	planets.push_back(sun);
-}
-
-void ConfigUtil::GetPlanetFromLine(std::string line, GLuint& program)
-{
-	Planet newPlanet = Planet(program);
-
-	char* word;
-	char* remaining = nullptr;
-	word = strtok_s((char*)line.c_str(), " ", &remaining);
-	while (word != NULL)// While 'words' are still being found
-	{
-		string data = word;
-
-		bool foundEquals = false;
-		string key = "";
-		string value = "";
-
-		for (size_t i = 0; i < data.size(); i++)// Run through all the letters sorting them into the key or the value
-		{
-			if (!foundEquals && data[i] == '=')
-			{
-				foundEquals = true;
-				continue;
-			}
-			else if (!foundEquals)
-			{
-				key += data[i];
-			}
-			else
-			{
-				value += data[i];
-			}
-		}
-
-		if (key.size() > 0 && value.size() > 0)// If both a key and a value are found
-		{
-			ParsePlanetKeyValuePair(newPlanet, key, value);
-		}
-
-		word = strtok_s(remaining, " ", &remaining);
-	}
-
-	planets.push_back(newPlanet);
-}
-
-void ConfigUtil::ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::string& value)
-{
-	if (key == "name")
-	{
-		planet.SetName(value);
-		return;
-	}
-
-	if (key == "mass")
-	{
-		planet.SetMass(stof(value));
-		return;
-	}
-
-	if (key == "distance")
-	{
-		planet.SetStartingDistance(stof(value));
-		return;
-	}
-
-	if (key == "radius")
-	{
-		planet.SetRadiusPercentage(stof(value));
-		return;
 	}
 }
 

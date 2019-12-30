@@ -9,6 +9,7 @@
 #include "Texture.h"
 #include "ConsoleUtil.h"
 #include "ModelLoaderFactory.h"
+#include "PlanetFactory.h"
 
 #include <glm/glm.hpp>
 #include <vector>
@@ -17,7 +18,7 @@ class Scene
 {
 public:
 	Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
-		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory);
+		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory);
 
 	void Update();
 
@@ -29,6 +30,7 @@ private:
 	InputManager& inputManager;
 	ConsoleUtil consoleUtil;
 	ModelLoaderFactory modelLoaderFactory;
+	PlanetFactory& planetFactory;
 
 	bool backfaceCull;
 

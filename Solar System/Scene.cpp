@@ -18,9 +18,9 @@
 using namespace std;
 
 Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
-	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory)
+	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory)
 			: configUtil(_configUtil), fileUtil(_fileUtil), inputManager(_inputManager),
-				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory)
+				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory), planetFactory(_planetFactory)
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
 
@@ -30,8 +30,6 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 		BindMovements();
 		CreateAndBindShaderProgram();
 		BindBackgroundColours();
-
-		configUtil.LoadPlanetData(program);
 		LoadPlanets();
 	}
 	catch (exception ex)
@@ -170,7 +168,7 @@ void Scene::LoadPlanets()
 	string sunPath = "Models/sun.obj";
 	string planetPath = "Models/planet.obj";
 
-	planets = configUtil.GetPlanets();
+	planets = planetFactory.CreateSolarSystem(program);
 
 	if (planets.size() == 0)
 	{

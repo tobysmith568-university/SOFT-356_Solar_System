@@ -18,7 +18,7 @@
 class Model
 {
 public:
-	Model(GLuint& _program);
+	Model(CameraUtil& _cameraUtil, GLuint& _program);
 	void Init();
 	void Update();
 

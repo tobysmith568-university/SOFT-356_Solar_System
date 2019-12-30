@@ -1,18 +1,26 @@
 #pragma once
+
+#include "GLFW/glfw3.h"
+
+#include "CameraUtil.h"
+
 #include <glm/glm.hpp>
 #include <glm/fwd.hpp>
-
-using namespace glm;
 
 class MVPBuilder
 {
 public:
-	MVPBuilder& AddScale(float x, float y, float z);
-	MVPBuilder& AddRotation(float degrees, float x, float y, float z);
-	MVPBuilder& AddTranslation(float x, float y, float z);
-	mat4 Build();
+	MVPBuilder(CameraUtil& _cameraUtil);
+
+	MVPBuilder& AddScale(GLfloat x, GLfloat y, GLfloat z);
+	MVPBuilder& AddRotation(GLfloat degrees, GLfloat x, GLfloat y, GLfloat z);
+	MVPBuilder& AddTranslation(GLfloat x, GLfloat y, GLfloat z);
+	glm::mat4 Build();
+
 private:
-	mat4 scaleModel = mat4(1.0f);
-	mat4 rotationModel = mat4(1.0f);
-	mat4 translationModel = mat4(1.0f);
+	CameraUtil& cameraUtil;
+
+	glm::mat4 scaleModel = glm::mat4(1.0f);
+	glm::mat4 rotationModel = glm::mat4(1.0f);
+	glm::mat4 translationModel = glm::mat4(1.0f);
 };
