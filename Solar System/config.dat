@@ -11,6 +11,8 @@ backgroundA=1
 useWireframes=0
 backfaceCull=0
 
+startOnFPSStyle=1
+
 movementSpeed=1.5
 
 vertexShader=shaders/shader.vert
@@ -25,3 +27,4 @@ KeyBinding_MoveForward=87
 KeyBinding_MoveBackward=83
 KeyBinding_MoveLeft=65
 KeyBinding_MoveRight=68
+KeyBinding_ToggleFPSStyle=84

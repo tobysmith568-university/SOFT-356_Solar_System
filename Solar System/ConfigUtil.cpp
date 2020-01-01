@@ -120,6 +120,8 @@ string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
 		return "backfaceCull";
 	case BoolSetting::FullScreenOnStartup:
 		return "fullScreenOnStartup";
+	case BoolSetting::StartOnFPSStyle:
+		return "startOnFPSStyle";
 	default:
 		return "";
 	}
@@ -192,6 +194,8 @@ string ConfigUtil::GetKeyBindingValue(KeyBinding keyBinding)
 		return "KeyBinding_MoveRight";
 	case KeyBinding::Quit:
 		return "KeyBinding_Quit";
+	case KeyBinding::ToggleFPSStyle:
+		return "KeyBinding_ToggleFPSStyle";
 	default:
 		return "";
 	}

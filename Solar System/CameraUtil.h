@@ -29,6 +29,11 @@ private:
 	GLfloat yaw;
 	GLfloat pitch;
 
+	bool isFPSStyle = false;
+
 	void SetUpKeyPresses();
 	void SetUpMouseMovement();
+
+	void FPSStyleCameraUpdate(GLfloat xpos, GLfloat ypos);
+	void ArcballStyleCameraUpdate(GLfloat xpos, GLfloat ypos);
 };

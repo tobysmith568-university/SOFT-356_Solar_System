@@ -11,7 +11,8 @@ enum class BoolSetting
 {
 	UseWireframes,
 	BackfaceCull,
-	FullScreenOnStartup
+	FullScreenOnStartup,
+	StartOnFPSStyle
 };
 
 enum class IntSetting
@@ -43,7 +44,8 @@ enum class KeyBinding
 	MoveBackward,
 	MoveLeft,
 	MoveRight,
-	Quit
+	Quit,
+	ToggleFPSStyle
 };
 
 class ConfigUtil
