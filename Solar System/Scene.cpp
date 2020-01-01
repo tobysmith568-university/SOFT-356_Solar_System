@@ -75,7 +75,7 @@ void Scene::UpdatePositions()
 			GLdouble planet1Mass = (GLdouble)planet->GetMass();
 			GLdouble planet2Mass = (GLdouble)otherPlanet->GetMass();
 
-			if (planetaryDistance < planet->GetRadiusPercentage() + otherPlanet->GetRadiusPercentage())
+			if (planetaryDistance < (GLdouble)planet->GetRadiusPercentage() + (GLdouble)otherPlanet->GetRadiusPercentage())
 			{
 				continue;
 			}
@@ -99,12 +99,8 @@ void Scene::UpdatePositions()
 
 			planet->GetModel().GetMVPBuilder()
 				.AddTranslation(velocity.x, velocity.y, velocity.z);
-
-			std::cout << "force = " << force << endl;
 		}
 	}
-
-	std::cout << "===================================================" << endl;
 }
 
 // Sets any config for OpenGL
