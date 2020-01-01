@@ -23,6 +23,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory), planetFactory(_planetFactory), timeUtil(_timeUtil)
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
+	physicsEnabled = configUtil.GetBool(BoolSetting::PhysicsEnabled);
 
 	try
 	{
@@ -47,7 +48,10 @@ void Scene::Update()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clears the previous buffers
 	
-	UpdatePositions();
+	if (physicsEnabled)
+	{
+		UpdatePositions();
+	}
 
 	for (size_t i = 0; i < planets.size(); i++)// For every planet
 	{
@@ -120,6 +124,10 @@ void Scene::SetGlobalState()
 // Creates lambda functions to be triggered on keypresses
 void Scene::BindMovements()
 {
+	inputManager.RegisterKeyRepeat(KeyBinding::TogglePhysicsEnabled, [&]()
+		{
+			physicsEnabled = !physicsEnabled;
+		});
 }
 
 // Binds the default clear colour for the scene

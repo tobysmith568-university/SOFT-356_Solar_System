@@ -34,6 +34,7 @@ private:
 	TimeUtil& timeUtil;
 
 	bool backfaceCull;
+	bool physicsEnabled;
 
 	std::vector<Planet> planets;
 

@@ -122,6 +122,8 @@ string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
 		return "fullScreenOnStartup";
 	case BoolSetting::StartOnFPSStyle:
 		return "startOnFPSStyle";
+	case BoolSetting::PhysicsEnabled:
+		return "physicsEnabled";
 	default:
 		return "";
 	}
@@ -196,6 +198,8 @@ string ConfigUtil::GetKeyBindingValue(KeyBinding keyBinding)
 		return "KeyBinding_Quit";
 	case KeyBinding::ToggleFPSStyle:
 		return "KeyBinding_ToggleFPSStyle";
+	case KeyBinding::TogglePhysicsEnabled:
+		return "KeyBinding_TogglePhysicsEnabled";
 	default:
 		return "";
 	}

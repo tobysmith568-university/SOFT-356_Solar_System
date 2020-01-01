@@ -12,7 +12,8 @@ enum class BoolSetting
 	UseWireframes,
 	BackfaceCull,
 	FullScreenOnStartup,
-	StartOnFPSStyle
+	StartOnFPSStyle,
+	PhysicsEnabled
 };
 
 enum class IntSetting
@@ -45,7 +46,8 @@ enum class KeyBinding
 	MoveLeft,
 	MoveRight,
 	Quit,
-	ToggleFPSStyle
+	ToggleFPSStyle,
+	TogglePhysicsEnabled
 };
 
 class ConfigUtil
