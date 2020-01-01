@@ -23,5 +23,12 @@ private:
 
 	GLfloat cameraSpeed;
 
+	bool firstMouse = true;
+	GLfloat lastX;
+	GLfloat lastY;
+	GLfloat yaw;
+	GLfloat pitch;
+
 	void SetUpKeyPresses();
+	void SetUpMouseMovement();
 };

@@ -42,3 +42,48 @@ void CameraUtil::SetUpKeyPresses()
 			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * timeUtil.GetDeltaTime();
 		});
 }
+
+void CameraUtil::SetUpMouseMovement()
+{
+	inputManager.RegisterMouseMovement([&](GLfloat xpos, GLfloat ypos)
+		{
+			if (firstMouse)
+			{
+				lastX = xpos;
+				lastY = ypos;
+				pitch = 0;
+				yaw = 0;
+				firstMouse = false;
+			}
+
+			GLfloat xoffset = xpos - lastX;
+			GLfloat yoffset = lastY - ypos;
+			lastX = xpos;
+			lastY = ypos;
+
+			GLfloat sensitivity = -7;
+			xoffset *= sensitivity * timeUtil.GetDeltaTime();
+			yoffset *= sensitivity * timeUtil.GetDeltaTime();
+
+			yaw += xoffset;
+			pitch += yoffset;
+
+			if (pitch > 89.0f)
+			{
+				pitch = 89.0f;
+			}
+
+			if (pitch < -89.0f)
+			{
+				pitch = -89.0f;
+			}
+
+			vec3 front;
+			front.x = cos(radians(yaw)) * cos(radians(pitch));
+			front.y = sin(radians(pitch));
+			front.z = sin(radians(yaw)) * cos(radians(pitch));
+			cameraFront = normalize(front);
+
+			std::cout << "Pitch = " << pitch << " Yaw = " << yaw << std::endl;
+		});
+}

@@ -27,6 +27,8 @@ void GLFWUtil::Init()
 		window = glfwCreateWindow(windowWidth, windowHeight, &windowTitle[0], NULL, NULL);// Creates a windowed window
 	}
 
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	glfwMakeContextCurrent(window);
 
 	inputManager.BindWindow(window);// Set the window as the current window in the input manager

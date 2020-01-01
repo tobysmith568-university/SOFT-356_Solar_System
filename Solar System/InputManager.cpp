@@ -42,6 +42,17 @@ void InputManager::BindWindow(GLFWwindow* window)
 			}
 		}
 	});
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos)
+	{
+		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
+
+		std::vector<std::function<void(GLfloat, GLfloat)>> allActions = self.GetMouseMovements();
+
+		for (auto& callback : allActions)// For every mouse movement callback
+		{
+			callback(xpos, ypos);// Run that callback
+		}
+	});
 }
 
 // Registers a new callback function for when a key is pressed in the current game tick
@@ -65,6 +76,11 @@ void InputManager::RegisterKeyRelease(KeyBinding keyBinding, std::function<void(
 	keyReleases[key].push_back(callback);
 }
 
+void InputManager::RegisterMouseMovement(std::function<void(GLfloat, GLfloat)> callback)
+{
+	mouseMovements.push_back(callback);
+}
+
 std::map<int, std::vector<std::function<void()>>> InputManager::GetKeyPresses()
 {
 	return keyPresses;
@@ -78,4 +94,9 @@ std::map<int, std::vector<std::function<void()>>> InputManager::GetKeyRepeats()
 std::map<int, std::vector<std::function<void()>>> InputManager::GetKeyReleases()
 {
 	return keyReleases;
+}
+
+std::vector<std::function<void(GLfloat, GLfloat)>> InputManager::GetMouseMovements()
+{
+	return mouseMovements;
 }
