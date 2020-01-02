@@ -127,7 +127,7 @@ void Scene::SetGlobalState()
 	}
 
 	// Setting up the light
-	glm::vec3 lightPos = glm::vec3(100.0f, 25.0f, 100.0f);
+	glm::vec3 lightPos = glm::vec3(10.0f, 10.0f, 10.0f);
 	GLuint dLightPosLoc = glGetUniformLocation(program, "lightPos");
 	glUniform3fv(dLightPosLoc, 1, glm::value_ptr(lightPos));
 }

@@ -22,7 +22,7 @@ fragmentShader=shaders/shader.frag
 planetFile=planets.dat
 planetModel=Models/planet.obj
 sunModel=Models/sun.obj
-sunScale=0.5
+sunScale=0.01
 
 
 KeyBinding_Quit=256
