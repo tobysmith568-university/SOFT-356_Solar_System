@@ -176,6 +176,10 @@ string ConfigUtil::GetStringValue(StringSetting stringSetting)
 		return "fragmentShader";
 	case StringSetting::PlanetFile:
 		return "planetFile";
+	case StringSetting::PlanetModel:
+		return "planetModel";
+	case StringSetting::SunModel:
+		return "sunModel";
 	default:
 		return "";
 	}

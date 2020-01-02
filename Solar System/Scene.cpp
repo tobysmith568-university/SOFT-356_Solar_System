@@ -184,8 +184,8 @@ void Scene::CreateAndBindShaderProgram()
 
 void Scene::LoadPlanets()
 {
-	string sunPath = "Models/sun.obj";
-	string planetPath = "Models/planet.obj";
+	string sunPath = configUtil.GetString(StringSetting::SunModel);
+	string planetPath = configUtil.GetString(StringSetting::PlanetModel);
 
 	planets = planetFactory.CreateSolarSystem(program);
 

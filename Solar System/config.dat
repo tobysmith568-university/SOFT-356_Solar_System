@@ -20,6 +20,8 @@ vertexShader=shaders/shader.vert
 fragmentShader=shaders/shader.frag
 
 planetFile=planets.dat
+planetModel=Models/planet.obj
+sunModel=Models/sun.obj
 
 
 

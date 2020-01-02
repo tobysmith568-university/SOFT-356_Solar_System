@@ -36,7 +36,9 @@ enum class StringSetting
 	WindowTitle,
 	VertexShader,
 	FragmentShader,
-	PlanetFile
+	PlanetFile,
+	PlanetModel,
+	SunModel
 };
 
 enum class KeyBinding
