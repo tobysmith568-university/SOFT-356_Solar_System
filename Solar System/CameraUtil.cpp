@@ -84,12 +84,11 @@ void CameraUtil::SetUpMouseMovement()
 {
 	inputManager.RegisterMouseMovement([&](GLfloat xpos, GLfloat ypos)
 		{
-			FPSStyleCameraUpdate(xpos, ypos);
-			ArcballStyleCameraUpdate(xpos, ypos);
+			UpdatePositions(xpos, ypos);
 		});
 }
 
-void CameraUtil::FPSStyleCameraUpdate(GLfloat xpos, GLfloat ypos)
+void CameraUtil::UpdatePositions(GLfloat xpos, GLfloat ypos)
 {
 	if (firstMouse)
 	{
@@ -127,10 +126,4 @@ void CameraUtil::FPSStyleCameraUpdate(GLfloat xpos, GLfloat ypos)
 	front.y = sin(radians(pitch));
 	front.z = sin(radians(yaw)) * cos(radians(pitch));
 	cameraFront = normalize(front);
-
-	std::cout << "Pitch = " << pitch << " Yaw = " << yaw << std::endl;
-}
-
-void CameraUtil::ArcballStyleCameraUpdate(GLfloat xpos, GLfloat ypos)
-{
 }

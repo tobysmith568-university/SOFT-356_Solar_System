@@ -34,6 +34,5 @@ private:
 	void SetUpKeyPresses();
 	void SetUpMouseMovement();
 
-	void FPSStyleCameraUpdate(GLfloat xpos, GLfloat ypos);
-	void ArcballStyleCameraUpdate(GLfloat xpos, GLfloat ypos);
+	void UpdatePositions(GLfloat xpos, GLfloat ypos);
 };
