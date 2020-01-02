@@ -12,6 +12,11 @@ MVPBuilder::MVPBuilder(CameraUtil& _cameraUtil)
 {
 }
 
+glm::mat4 MVPBuilder::GetTranslationMatrix()
+{
+	return translationModel;
+}
+
 // Modifies the scale of the MVP
 MVPBuilder& MVPBuilder::AddScale(GLfloat x, GLfloat y, GLfloat z)
 {

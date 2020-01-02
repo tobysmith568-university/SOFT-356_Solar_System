@@ -83,16 +83,20 @@ Model& Planet::GetModel()
 
 GLdouble Planet::DistanceTo(Planet& otherPlanet)
 {
-	mat4 thisMVP = GetModel().GetMVP();
-	mat4 otherMVP = otherPlanet.GetModel().GetMVP();
+	mat4 thisMVP = GetModel().GetMVPBuilder().GetTranslationMatrix();
+	mat4 otherMVP = otherPlanet.GetModel().GetMVPBuilder().GetTranslationMatrix();
 
 	return length(thisMVP[3] - otherMVP[3]);
 }
 
 vec3 Planet::NormalizedVectorTo(Planet& otherPlanet)
 {
-	mat4 thisMVP = GetModel().GetMVP();
-	mat4 otherMVP = otherPlanet.GetModel().GetMVP();
+	mat4 thisMVP = GetModel().GetMVPBuilder().GetTranslationMatrix();
+	mat4 otherMVP = otherPlanet.GetModel().GetMVPBuilder().GetTranslationMatrix();
 
-	return normalize(vec3(otherMVP[3] - thisMVP[3]));
+	mat4 together = otherMVP - thisMVP;
+
+	vec3 vector = vec3(together[3]);
+
+	return normalize(vector);
 }

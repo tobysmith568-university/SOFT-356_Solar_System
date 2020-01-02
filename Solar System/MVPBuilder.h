@@ -12,6 +12,8 @@ class MVPBuilder
 public:
 	MVPBuilder(CameraUtil& _cameraUtil);
 
+	glm::mat4 GetTranslationMatrix();
+
 	MVPBuilder& AddScale(GLfloat x, GLfloat y, GLfloat z);
 	MVPBuilder& AddRotation(GLfloat degrees, GLfloat x, GLfloat y, GLfloat z);
 	MVPBuilder& AddTranslation(GLfloat x, GLfloat y, GLfloat z);
