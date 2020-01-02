@@ -1,4 +1,4 @@
 5000
-name=something mass=60 distance=0.5 radius=0.2 initialForce=0.03
-name=earth mass=180 distance=1 radius=0.2 initialForce=0.03
-name=earth mass=180 distance=-1 radius=0.2 initialForce=0.03
+#name=something mass=60 distance=0.5 radius=0.2 initialForce=0.07
+name=earth mass=180 distance=1 radius=0.2 initialForce=0.09
+#name=earth mass=180 distance=-1 radius=0.2 initialForce=0.07

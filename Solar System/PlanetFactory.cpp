@@ -14,7 +14,7 @@ std::vector<Planet> PlanetFactory::CreateSolarSystem(GLuint& program)
 
 	vector<Planet> planets = vector<Planet>();
 
-	if (planetFile.size() > 0)
+	if (planetFile.size() > 0 && planetFile[0][0] != '#')
 	{
 		LoadSun(planets, stof(planetFile[0]), program);
 	}
@@ -26,7 +26,10 @@ std::vector<Planet> PlanetFactory::CreateSolarSystem(GLuint& program)
 
 	for (size_t i = 1; i < planetFile.size(); i++)
 	{
-		GetPlanetFromLine(planets, planetFile[i], program);
+		if (planetFile[i][0] != '#')
+		{
+			GetPlanetFromLine(planets, planetFile[i], program);
+		}
 	}
 
 	return planets;
