@@ -46,6 +46,7 @@ enum class KeyBinding
 	MoveLeft,
 	MoveRight,
 	Quit,
+	Reset,
 	ToggleFPSStyle,
 	TogglePhysicsEnabled
 };

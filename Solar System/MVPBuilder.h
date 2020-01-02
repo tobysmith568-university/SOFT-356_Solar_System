@@ -17,6 +17,15 @@ public:
 	MVPBuilder& AddTranslation(GLfloat x, GLfloat y, GLfloat z);
 	glm::mat4 Build();
 
+	MVPBuilder& operator = (const MVPBuilder& _mvpBuilder)
+	{
+		scaleModel = _mvpBuilder.scaleModel;
+		rotationModel = _mvpBuilder.rotationModel;
+		translationModel = _mvpBuilder.translationModel;
+
+		return *this;
+	}
+
 private:
 	CameraUtil& cameraUtil;
 

@@ -128,6 +128,13 @@ void Scene::BindMovements()
 		{
 			physicsEnabled = !physicsEnabled;
 		});
+	inputManager.RegisterKeyRepeat(KeyBinding::Reset, [&]()
+		{
+			for (size_t i = 0; i < planets.size(); i++)
+			{
+				planets[i].RestoreToMemento(planetMementos[i]);
+			}
+		});
 }
 
 // Binds the default clear colour for the scene
@@ -207,6 +214,8 @@ void Scene::LoadPlanet(Planet& planet, string modelPath)
 
 		ml.GetModel(planet.GetModel(), modelPath, program);// Loads in model data using that model loader
 		planet.GetModel().Init();// Inits the OpenGL code within the model
+
+		planetMementos.push_back(planet.CreateMemento());
 	}
 	catch (InvalidModelFileException & ex)
 	{

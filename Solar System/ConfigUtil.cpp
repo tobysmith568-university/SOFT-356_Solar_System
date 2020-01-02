@@ -196,6 +196,8 @@ string ConfigUtil::GetKeyBindingValue(KeyBinding keyBinding)
 		return "KeyBinding_MoveRight";
 	case KeyBinding::Quit:
 		return "KeyBinding_Quit";
+	case KeyBinding::Reset:
+		return "KeyBinding_Reset";
 	case KeyBinding::ToggleFPSStyle:
 		return "KeyBinding_ToggleFPSStyle";
 	case KeyBinding::TogglePhysicsEnabled:

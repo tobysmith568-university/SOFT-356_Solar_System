@@ -1,4 +1,5 @@
 #include "Planet.h"
+#include "PlanetMemento.h"
 
 Planet::Planet(CameraUtil& _cameraUtil, GLuint& _program)
 	: model(_cameraUtil, _program), mass(0), startingDistance(0), radiusPercentage(0), velocity(vec3(0.0f))
@@ -8,6 +9,21 @@ Planet::Planet(CameraUtil& _cameraUtil, GLuint& _program)
 void Planet::Update()
 {
 	model.Update();
+}
+
+PlanetMemento Planet::CreateMemento()
+{
+	return PlanetMemento(this);
+}
+
+void Planet::RestoreToMemento(PlanetMemento& memento)
+{
+	name = memento.name;
+	mass = memento.mass;
+	startingDistance = memento.startingDistance;
+	radiusPercentage = memento.radiusPercentage;
+	velocity = memento.velocity;
+	model.SetMVPBuilder(memento.mvpBuilder);
 }
 
 std::string Planet::GetName()

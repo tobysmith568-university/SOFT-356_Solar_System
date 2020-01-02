@@ -72,6 +72,11 @@ MVPBuilder& Model::GetMVPBuilder()
 	return mvpBuilder;
 }
 
+void Model::SetMVPBuilder(MVPBuilder _mvpBuilder)
+{
+	mvpBuilder = _mvpBuilder;
+}
+
 glm::mat4 Model::GetMVP()
 {
 	return mvp;

@@ -8,12 +8,16 @@
 
 using namespace glm;
 
+class PlanetMemento;
+
 struct Planet
 {
 public:
 	Planet(CameraUtil& _cameraUtil, GLuint& _program);
 
 	void Update();
+	PlanetMemento CreateMemento();
+	void RestoreToMemento(PlanetMemento& memento);
 
 	std::string GetName();
 	void SetName(std::string _name);
@@ -36,6 +40,8 @@ public:
 	vec3 NormalizedVectorTo(Planet& otherPlanet);
 
 private:
+	friend class PlanetMemento;
+
 	std::string name;
 	GLfloat mass;
 	GLfloat startingDistance;

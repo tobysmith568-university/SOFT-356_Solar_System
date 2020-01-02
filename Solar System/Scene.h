@@ -10,6 +10,7 @@
 #include "ConsoleUtil.h"
 #include "ModelLoaderFactory.h"
 #include "PlanetFactory.h"
+#include "PlanetMemento.h"
 
 #include <glm/glm.hpp>
 #include <vector>
@@ -37,6 +38,7 @@ private:
 	bool physicsEnabled;
 
 	std::vector<Planet> planets;
+	std::vector<PlanetMemento> planetMementos;
 
 	GLuint program;
 
