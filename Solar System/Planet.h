@@ -31,8 +31,14 @@ public:
 	GLfloat GetRadiusPercentage();
 	void SetRadiusPercentage(GLfloat _radiusPercentage);
 
+	GLfloat GetInitialForce();
+	void SetInitialForce(GLfloat initialForce);
+
 	glm::vec3 GetVelocity();
 	void SetVelocity(glm::vec3 _velocity);
+
+	bool GetHasInitialForceApplied();
+	void SetInitialForceHasBeenApplied();
 
 	Model& GetModel();
 
@@ -46,8 +52,11 @@ private:
 	GLfloat mass;
 	GLfloat startingDistance;
 	GLfloat radiusPercentage;
+	GLfloat initialForce;
 
 	glm::vec3 velocity;
+
+	bool hasInitialForceApplied;
 
 	Model model;
 };

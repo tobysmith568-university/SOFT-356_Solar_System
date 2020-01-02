@@ -109,4 +109,10 @@ void PlanetFactory::ParsePlanetKeyValuePair(Planet& planet, std::string& key, st
 		planet.SetRadiusPercentage(stof(value));
 		return;
 	}
+
+	if (key == "initialForce")
+	{
+		planet.SetInitialForce(stof(value));
+		return;
+	}
 }

@@ -96,6 +96,12 @@ void Scene::UpdatePositions()
 
 			vec3 forceVector = vector * (GLfloat)force;
 
+			if (!planet->GetHasInitialForceApplied())
+			{
+				forceVector += vec3(0.0f, 0.0f, planet->GetInitialForce());
+				planet->SetInitialForceHasBeenApplied();
+			}
+
 			vec3 acceleration = forceVector / planet->GetMass();
 
 			vec3 velocity = planet->GetVelocity() + acceleration;

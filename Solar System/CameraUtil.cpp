@@ -90,13 +90,13 @@ void CameraUtil::SetUpMouseMovement()
 
 void CameraUtil::UpdatePositions(GLfloat xpos, GLfloat ypos)
 {
-	if (firstMouse)
+	if (firstRun)
 	{
 		lastX = xpos;
 		lastY = ypos;
 		pitch = 0;
 		yaw = 0;
-		firstMouse = false;
+		firstRun = false;
 	}
 
 	GLfloat xoffset = xpos - lastX;

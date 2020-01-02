@@ -23,7 +23,7 @@ private:
 
 	GLfloat cameraSpeed;
 
-	bool firstMouse = true;
+	bool firstRun = true;
 	GLfloat lastX;
 	GLfloat lastY;
 	GLfloat yaw;

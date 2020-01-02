@@ -2,7 +2,7 @@
 #include "PlanetMemento.h"
 
 Planet::Planet(CameraUtil& _cameraUtil, GLuint& _program)
-	: model(_cameraUtil, _program), mass(0), startingDistance(0), radiusPercentage(0), velocity(vec3(0.0f))
+	: model(_cameraUtil, _program), mass(0), startingDistance(0), radiusPercentage(0), initialForce(0), velocity(vec3(0.0f)), hasInitialForceApplied(false)
 {
 }
 
@@ -66,6 +66,16 @@ void Planet::SetRadiusPercentage(GLfloat _radiusPercentage)
 	radiusPercentage = _radiusPercentage;
 }
 
+GLfloat Planet::GetInitialForce()
+{
+	return initialForce;
+}
+
+void Planet::SetInitialForce(GLfloat _initialForce)
+{
+	initialForce = _initialForce;
+}
+
 glm::vec3 Planet::GetVelocity()
 {
 	return velocity;
@@ -74,6 +84,16 @@ glm::vec3 Planet::GetVelocity()
 void Planet::SetVelocity(glm::vec3 _velocity)
 {
 	velocity = _velocity;
+}
+
+bool Planet::GetHasInitialForceApplied()
+{
+	return hasInitialForceApplied;
+}
+
+void Planet::SetInitialForceHasBeenApplied()
+{
+	hasInitialForceApplied = true;
 }
 
 Model& Planet::GetModel()

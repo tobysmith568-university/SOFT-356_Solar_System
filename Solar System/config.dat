@@ -13,7 +13,7 @@ backfaceCull=0
 
 physicsEnabled=0
 
-startOnFPSStyle=1
+startOnFPSStyle=0
 movementSpeed=1.5
 
 vertexShader=shaders/shader.vert
