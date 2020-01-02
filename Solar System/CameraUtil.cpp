@@ -1,5 +1,6 @@
 #include "CameraUtil.h"
 #include <glm\ext\matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 
 using namespace glm;
 
@@ -30,7 +31,25 @@ CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigU
 
 glm::mat4 CameraUtil::GetView()
 {
-	return lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	if (isFPSStyle)
+	{
+		return lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	}
+	else
+	{
+		mat4 view = {
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1,
+		};
+		
+		view = glm::translate(view, vec3(0.0f, 0.0f, -3.0f));
+		view = glm::rotate(view, radians(pitch), vec3(1.0f, 0.0f, 0.0f));
+		view = glm::rotate(view, radians(yaw), vec3(0.0f, -1.0f, 0.0f));
+
+		return view;
+	}
 }
 
 void CameraUtil::SetUpKeyPresses()
@@ -65,14 +84,8 @@ void CameraUtil::SetUpMouseMovement()
 {
 	inputManager.RegisterMouseMovement([&](GLfloat xpos, GLfloat ypos)
 		{
-			if (isFPSStyle)
-			{
-				FPSStyleCameraUpdate(xpos, ypos);
-			}
-			else
-			{
-
-			}
+			FPSStyleCameraUpdate(xpos, ypos);
+			ArcballStyleCameraUpdate(xpos, ypos);
 		});
 }
 
