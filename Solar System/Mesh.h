@@ -42,4 +42,6 @@ private:
 	GLuint vertexBuffer;
 	GLuint indicesBuffer;
 	GLuint textureBuffer;
+
+	GLfloat NormaliseTo(GLfloat value, GLuint currentMax, GLuint wantedMax);
 };

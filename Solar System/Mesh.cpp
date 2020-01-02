@@ -23,6 +23,24 @@ void Mesh::Init()
 void Mesh::Update()
 {
 	glBindVertexArray(VAO);// Binds the VAO and re-draws the content
+
+	//Pass this mesh's material's ambient light into the shader program
+	glm::vec4 ambient = glm::vec4(material.ambientColour.x, material.ambientColour.y, material.ambientColour.z, 1.0f);
+	//adding the Uniform to the shader
+	GLuint aLoc = glGetUniformLocation(program, "ambient");
+	glUniform4fv(aLoc, 1, glm::value_ptr(ambient));
+
+	//Pass this mesh's material's diffuse light into the shader program
+	GLuint dLightLoc = glGetUniformLocation(program, "dLight");
+	glUniform3fv(dLightLoc, 1, glm::value_ptr(material.diffuseColour));
+
+	//Pass this mesh's material's specular light into the shader program
+	GLfloat shininess = NormaliseTo(material.specularColourWeight, 1000, 128);
+	GLuint sLightLoc = glGetUniformLocation(program, "sLight");
+	GLuint sShineLoc = glGetUniformLocation(program, "sShine");
+	glUniform3fv(sLightLoc, 1, glm::value_ptr(material.specularColour));
+	glUniform1fv(sShineLoc, 1, &shininess);
+
 	glBindTexture(GL_TEXTURE_2D, textureBuffer);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
@@ -87,7 +105,7 @@ void Mesh::BindIndices()
 	glVertexAttribPointer(tPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, texture)));// Set where texture coords are stored in a Vertex
 	glEnableVertexAttribArray(tPosition);
 
-	glVertexAttribPointer(vNormal, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, texture)));// Set where texture coords are stored in a Vertex
+	glVertexAttribPointer(vNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, normal)));// Set where normal coords are stored in a Vertex
 	glEnableVertexAttribArray(vNormal);
 
 	glVertexAttribPointer(cPosition, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, colour)));// Set where colour data is stored in a Vertex
@@ -111,4 +129,9 @@ void Mesh::BindTexture()
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	glUniform1i(glGetUniformLocation(program, "texture1"), 0);
+}
+
+GLfloat Mesh::NormaliseTo(GLfloat value, GLuint currentMax, GLuint wantedMax)
+{
+	return value / (currentMax / wantedMax);
 }
