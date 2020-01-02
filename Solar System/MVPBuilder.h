@@ -17,7 +17,9 @@ public:
 	MVPBuilder& AddScale(GLfloat x, GLfloat y, GLfloat z);
 	MVPBuilder& AddRotation(GLfloat degrees, GLfloat x, GLfloat y, GLfloat z);
 	MVPBuilder& AddTranslation(GLfloat x, GLfloat y, GLfloat z);
-	glm::mat4 Build();
+	glm::mat4 BuildP();
+	glm::mat4 BuildMV();
+	glm::mat4 BuildMVP();
 
 	MVPBuilder& operator = (const MVPBuilder& _mvpBuilder)
 	{

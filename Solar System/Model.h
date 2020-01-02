@@ -31,10 +31,9 @@ public:
 
 	MVPBuilder& GetMVPBuilder();
 	void SetMVPBuilder(MVPBuilder _mvpBuilder);
-	glm::mat4 GetMVP();
 
 private:
-	void UseMVP(mat4 mvp);
+	void UseMVP();
 
 	GLuint& program;
 
@@ -42,5 +41,4 @@ private:
 	std::map<std::string, Material> materials;
 
 	MVPBuilder mvpBuilder;
-	glm::mat4 mvp;
 };

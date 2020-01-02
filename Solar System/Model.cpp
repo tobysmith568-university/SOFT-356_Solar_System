@@ -10,8 +10,7 @@ Model::Model(CameraUtil& _cameraUtil, GLuint& _program)
 		.AddScale(1.0f, 1.0f, 1.0f)
 		.AddTranslation(0.0f, 0.0f, 0.0f);
 
-	mvp = mvpBuilder.Build();// Create and use an MVP
-	UseMVP(mvp);
+	UseMVP();
 }
 
 // OpenGL Setup
@@ -26,8 +25,7 @@ void Model::Init()
 // To be run every game tick
 void Model::Update()
 {
-	mvp = mvpBuilder.Build();// Re-create and use a new MVP. The MVP builder may have been adjusted between game ticks
-	UseMVP(mvp);
+	UseMVP();
 
 	for (size_t i = 0; i < objects.size(); i++)// For every object
 	{
@@ -77,14 +75,12 @@ void Model::SetMVPBuilder(MVPBuilder _mvpBuilder)
 	mvpBuilder = _mvpBuilder;
 }
 
-glm::mat4 Model::GetMVP()
-{
-	return mvp;
-}
-
 // Sets this Model's MVP as the current one in the shader program
-void Model::UseMVP(mat4 mvp)
+void Model::UseMVP()
 {
-	int mvpLoc = glGetUniformLocation(program, "mvp");
-	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
+	int mvLoc = glGetUniformLocation(program, "mv_matrix");
+	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvpBuilder.BuildMV()));
+
+	int pLoc = glGetUniformLocation(program, "p_matrix");
+	glUniformMatrix4fv(pLoc, 1, GL_FALSE, glm::value_ptr(mvpBuilder.BuildP()));
 }

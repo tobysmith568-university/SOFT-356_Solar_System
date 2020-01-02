@@ -87,6 +87,9 @@ void Mesh::BindIndices()
 	glVertexAttribPointer(tPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, texture)));// Set where texture coords are stored in a Vertex
 	glEnableVertexAttribArray(tPosition);
 
+	glVertexAttribPointer(vNormal, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, texture)));// Set where texture coords are stored in a Vertex
+	glEnableVertexAttribArray(vNormal);
+
 	glVertexAttribPointer(cPosition, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(offsetof(Vertex, colour)));// Set where colour data is stored in a Vertex
 	glEnableVertexAttribArray(cPosition);
 }

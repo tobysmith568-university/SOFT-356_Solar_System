@@ -38,16 +38,27 @@ MVPBuilder& MVPBuilder::AddTranslation(GLfloat x, GLfloat y, GLfloat z)
 	return *this;
 }
 
-// Combines a Projection, a View, and the Translation, Rotation, and Scale matrices
-mat4 MVPBuilder::Build()
+glm::mat4 MVPBuilder::BuildP()
+{
+	// Creating the projection matrix
+	return perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
+}
+
+glm::mat4 MVPBuilder::BuildMV()
 {
 	mat4 view = cameraUtil.GetView();
 
-	// creating the projection matrix
-	mat4 projection = perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
-
 	// Adding all matrices up to create combined matrix
-	mat4 mvp = projection * view * translationModel * rotationModel * scaleModel;
+	mat4 mv = view * translationModel * rotationModel * scaleModel;
+
+	return mv;
+}
+
+// Combines a Projection, a View, and the Translation, Rotation, and Scale matrices
+mat4 MVPBuilder::BuildMVP()
+{
+	// Adding all matrices up to create combined matrix
+	mat4 mvp = BuildP() * BuildMV();
 
 	return mvp;
 }
