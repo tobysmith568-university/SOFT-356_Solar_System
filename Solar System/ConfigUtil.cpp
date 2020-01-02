@@ -158,6 +158,8 @@ string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
 		return "backgroundA";
 	case FloatSetting::MovementSpeed:
 		return "movementSpeed";
+	case FloatSetting::SunScale:
+		return "sunScale";
 	default:
 		return "";
 	}

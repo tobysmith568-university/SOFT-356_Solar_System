@@ -28,7 +28,8 @@ enum class FloatSetting
 	BackgroundG,
 	BackgroundB,
 	BackgroundA,
-	MovementSpeed
+	MovementSpeed,
+	SunScale
 };
 
 enum class StringSetting

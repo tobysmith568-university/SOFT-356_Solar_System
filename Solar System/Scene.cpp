@@ -126,30 +126,10 @@ void Scene::SetGlobalState()
 		glEnable(GL_CULL_FACE);
 	}
 
-	// ambient light
-	glm::vec4 ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-	//adding the Uniform to the shader
-	GLuint aLoc = glGetUniformLocation(program, "ambient");
-	glUniform4fv(aLoc, 1, glm::value_ptr(ambient));
-
-	// light object
+	// Setting up the light
 	glm::vec3 lightPos = glm::vec3(100.0f, 25.0f, 100.0f);
 	GLuint dLightPosLoc = glGetUniformLocation(program, "lightPos");
 	glUniform3fv(dLightPosLoc, 1, glm::value_ptr(lightPos));
-
-
-	// diffuse light
-	glm::vec3 diffuseLight = glm::vec3(0.5f, 0.2f, 0.7f);
-	GLuint dLightLoc = glGetUniformLocation(program, "dLight");
-	glUniform3fv(dLightLoc, 1, glm::value_ptr(diffuseLight));
-
-	// specular light
-	glm::vec3 specularLight = glm::vec3(0.7f);
-	GLfloat shininess = 256; //128 is max value
-	GLuint sLightLoc = glGetUniformLocation(program, "sLight");
-	GLuint sShineLoc = glGetUniformLocation(program, "sShine");
-	glUniform3fv(sLightLoc, 1, glm::value_ptr(specularLight));
-	glUniform1fv(sShineLoc, 1, &shininess);
 }
 
 // Creates lambda functions to be triggered on keypresses
@@ -211,6 +191,7 @@ void Scene::LoadPlanets()
 {
 	string sunPath = configUtil.GetString(StringSetting::SunModel);
 	string planetPath = configUtil.GetString(StringSetting::PlanetModel);
+	GLfloat sunScale = configUtil.GetFloat(FloatSetting::SunScale);
 
 	planets = planetFactory.CreateSolarSystem(program);
 
@@ -222,7 +203,7 @@ void Scene::LoadPlanets()
 	LoadPlanet(planets[0], sunPath);
 
 	planets[0].GetModel().GetMVPBuilder()
-		.AddScale(0.5f, 0.5f, 0.5f);
+		.AddScale(sunScale, sunScale, sunScale);
 
 	for (size_t i = 1; i < planets.size(); i++)
 	{
@@ -231,7 +212,7 @@ void Scene::LoadPlanets()
 		GLfloat radiusScale = planets[i].GetRadiusPercentage();
 
 		planets[i].GetModel().GetMVPBuilder()
-			.AddScale(0.5f, 0.5f, 0.5f)
+			.AddScale(sunScale, sunScale, sunScale)
 			.AddScale(radiusScale, radiusScale, radiusScale)
 			.AddTranslation(planets[i].GetStartingDistance(), 0, 0);
 	}
