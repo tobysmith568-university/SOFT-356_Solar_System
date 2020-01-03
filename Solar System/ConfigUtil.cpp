@@ -124,6 +124,8 @@ string ConfigUtil::GetBoolValue(BoolSetting boolSetting)
 		return "startOnFPSStyle";
 	case BoolSetting::PhysicsEnabled:
 		return "physicsEnabled";
+	case BoolSetting::LockSun:
+		return "lockSun";
 	default:
 		return "";
 	}

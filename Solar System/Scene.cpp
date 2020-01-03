@@ -24,6 +24,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
 	physicsEnabled = configUtil.GetBool(BoolSetting::PhysicsEnabled);
+	lockSun = configUtil.GetBool(BoolSetting::LockSun);
 
 	try
 	{
@@ -63,6 +64,11 @@ void Scene::UpdatePositions()
 {
 	for (size_t i = 0; i < planets.size(); i++)
 	{
+		if (lockSun && i == 0)
+		{
+			continue;
+		}
+
 		Planet* planet = &planets[i];
 
 		for (size_t ii = 0; ii < planets.size(); ii++)

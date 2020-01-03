@@ -36,6 +36,7 @@ private:
 
 	bool backfaceCull;
 	bool physicsEnabled;
+	bool lockSun;
 
 	std::vector<Planet> planets;
 	std::vector<PlanetMemento> planetMementos;

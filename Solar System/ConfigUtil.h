@@ -13,7 +13,8 @@ enum class BoolSetting
 	BackfaceCull,
 	FullScreenOnStartup,
 	StartOnFPSStyle,
-	PhysicsEnabled
+	PhysicsEnabled,
+	LockSun
 };
 
 enum class IntSetting
