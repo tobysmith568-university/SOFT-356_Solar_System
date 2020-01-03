@@ -12,9 +12,10 @@ useWireframes=0
 backfaceCull=0
 
 physicsEnabled=0
+lockSun=1
 
 startOnFPSStyle=0
-movementSpeed=1.5
+movementSpeed=50
 
 vertexShader=shaders/shader.vert
 fragmentShader=shaders/shader.frag
@@ -23,6 +24,7 @@ planetFile=planets.dat
 planetModel=Models/planet.obj
 sunModel=Models/sun.obj
 sunScale=0.01
+
 
 
 KeyBinding_Quit=256

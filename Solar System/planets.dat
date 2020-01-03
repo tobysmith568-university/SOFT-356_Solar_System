@@ -1,4 +1,5 @@
 5000
 #name=something mass=60 distance=0.5 radius=0.2 initialForce=0.045
 name=earth mass=180 distance=1 radius=0.2 initialForce=0.09
+name=Bigboi mass=400 distance=2 radius=0.8 initialForce=0.09
 #name=earth mass=180 distance=-1 radius=0.2 initialForce=0.09

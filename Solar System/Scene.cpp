@@ -126,6 +126,14 @@ void Scene::SetGlobalState()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
+	float vAmbientLight[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, vAmbientLight);
+	glEnable(GL_LIGHTING);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+	glShadeModel(GL_SMOOTH);
+	glMaterialfv(GL_AMBIENT, GL_SHININESS, vAmbientLight);
+
 	if (backfaceCull)
 	{
 		glCullFace(GL_BACK);
@@ -133,7 +141,7 @@ void Scene::SetGlobalState()
 	}
 
 	// Setting up the light
-	glm::vec3 lightPos = glm::vec3(10.0f, 10.0f, 10.0f);
+	glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, -3.0f);
 	GLuint dLightPosLoc = glGetUniformLocation(program, "lightPos");
 	glUniform3fv(dLightPosLoc, 1, glm::value_ptr(lightPos));
 }
