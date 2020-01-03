@@ -4,6 +4,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <GLFW\glfw3.h>
+#include "GlfwUtil.h"
 
 using namespace glm;
 
@@ -40,13 +41,12 @@ MVPBuilder& MVPBuilder::AddTranslation(GLfloat x, GLfloat y, GLfloat z)
 
 glm::mat4 MVPBuilder::BuildP()
 {
-	// Creating the projection matrix
-	return perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
+	return cameraUtil.GetProjectionMatrix();
 }
 
 glm::mat4 MVPBuilder::BuildMV()
 {
-	mat4 view = cameraUtil.GetView();
+	mat4 view = cameraUtil.GetViewMatrix();
 
 	// Adding all matrices up to create combined matrix
 	mat4 mv = view * translationModel * rotationModel * scaleModel;
@@ -58,7 +58,7 @@ glm::mat4 MVPBuilder::BuildMV()
 mat4 MVPBuilder::BuildMVP()
 {
 	// Adding all matrices up to create combined matrix
-	mat4 mvp = BuildP() * BuildMV();
+	mat4 mvp = cameraUtil.GetProjectionMatrix() * BuildMV();
 
 	return mvp;
 }

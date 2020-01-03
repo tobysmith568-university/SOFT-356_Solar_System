@@ -29,7 +29,7 @@ CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigU
 	SetUpMouseMovement();
 }
 
-glm::mat4 CameraUtil::GetView()
+glm::mat4 CameraUtil::GetViewMatrix()
 {
 	if (isFPSStyle)
 	{
@@ -50,6 +50,17 @@ glm::mat4 CameraUtil::GetView()
 
 		return view;
 	}
+}
+
+// Creating a projection matrix
+glm::mat4 CameraUtil::GetProjectionMatrix()
+{
+	return glm::perspective(45.0f, aspectRatio, 0.1f, 30.0f);
+}
+
+void CameraUtil::SetAspectRatio(GLfloat _aspectRatio)
+{
+	aspectRatio = _aspectRatio;
 }
 
 void CameraUtil::SetUpKeyPresses()

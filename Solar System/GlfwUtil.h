@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ConfigUtil.h"
+#include "CameraUtil.h"
 
 #include "GLFW/glfw3.h"
 #include "InputManager.h"
@@ -8,7 +9,7 @@
 class GLFWUtil
 {
 public:
-	GLFWUtil(ConfigUtil& _configUtil, InputManager& _inputManager);
+	GLFWUtil(ConfigUtil& _configUtil, InputManager& _inputManager, CameraUtil& _cameraUtil);
 	void Init();
 	void Update();
 	void WireFrameOnly();
@@ -18,6 +19,7 @@ public:
 private:
 	ConfigUtil& configUtil;
 	InputManager& inputManager;
+	CameraUtil& cameraUtil;
 
 	GLFWwindow* window;
 };

@@ -11,7 +11,10 @@ class CameraUtil
 public:
 	CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigUtil& _configUtil);
 
-	glm::mat4 GetView();
+	glm::mat4 GetViewMatrix();
+	glm::mat4 GetProjectionMatrix();
+
+	void SetAspectRatio(GLfloat _aspectRatio);
 
 private:
 	InputManager& inputManager;
@@ -30,6 +33,8 @@ private:
 	GLfloat pitch;
 
 	bool isFPSStyle = false;
+
+	GLfloat aspectRatio;
 
 	void SetUpKeyPresses();
 	void SetUpMouseMovement();

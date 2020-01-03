@@ -3,7 +3,8 @@
 
 using namespace std;
 
-GLFWUtil::GLFWUtil(ConfigUtil& _configUtil, InputManager& _inputManager) : configUtil(_configUtil), inputManager(_inputManager)
+GLFWUtil::GLFWUtil(ConfigUtil& _configUtil, InputManager& _inputManager, CameraUtil& _cameraUtil)
+	: configUtil(_configUtil), inputManager(_inputManager), cameraUtil(_cameraUtil)
 {
 }
 
@@ -16,15 +17,23 @@ void GLFWUtil::Init()
 	int windowHeight = configUtil.GetInt(IntSetting::WindowHeight);
 	string windowTitle = configUtil.GetString(StringSetting::WindowTitle);
 
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
 	if (configUtil.GetBool(BoolSetting::FullScreenOnStartup))
 	{
-		GLFWmonitor* monitor = glfwGetPrimaryMonitor();// Creates a fullscreen window
-		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		window = glfwCreateWindow(mode->width, mode->height, &windowTitle[0], monitor, NULL);
+		window = glfwCreateWindow(mode->width, mode->height, &windowTitle[0], monitor, NULL);// Creates a fullscreen window
+		cameraUtil.SetAspectRatio((GLfloat)mode->width / (GLfloat)mode->height);
 	}
 	else
 	{
 		window = glfwCreateWindow(windowWidth, windowHeight, &windowTitle[0], NULL, NULL);// Creates a windowed window
+		cameraUtil.SetAspectRatio((GLfloat)windowWidth / (GLfloat)windowHeight);
 	}
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
