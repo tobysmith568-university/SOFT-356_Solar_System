@@ -3,9 +3,9 @@ windowHeight=600
 windowTitle=My Window
 fullScreenOnStartup=0
 
-backgroundR=127
-backgroundG=202
-backgroundB=240
+backgroundR=0
+backgroundG=0
+backgroundB=0
 backgroundA=1
 
 useWireframes=0
