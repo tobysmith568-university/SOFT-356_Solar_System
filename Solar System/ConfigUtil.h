@@ -30,7 +30,8 @@ enum class FloatSetting
 	BackgroundB,
 	BackgroundA,
 	MovementSpeed,
-	SunScale
+	SunScale,
+	BackgroundScale
 };
 
 enum class StringSetting
@@ -40,7 +41,8 @@ enum class StringSetting
 	FragmentShader,
 	PlanetFile,
 	PlanetModel,
-	SunModel
+	SunModel,
+	BackgroundModel
 };
 
 enum class KeyBinding

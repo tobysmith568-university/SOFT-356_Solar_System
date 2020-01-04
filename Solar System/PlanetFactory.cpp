@@ -14,6 +14,8 @@ std::vector<Planet> PlanetFactory::CreateSolarSystem(GLuint& program)
 
 	vector<Planet> planets = vector<Planet>();
 
+	LoadBackground(planets, program);
+
 	if (planetFile.size() > 0 && planetFile[0][0] != '#')
 	{
 		LoadSun(planets, stof(planetFile[0]), program);
@@ -33,6 +35,15 @@ std::vector<Planet> PlanetFactory::CreateSolarSystem(GLuint& program)
 	}
 
 	return planets;
+}
+
+void PlanetFactory::LoadBackground(std::vector<Planet>& planets, GLuint& program)
+{
+	Planet background = Planet(cameraUtil, program);
+	background.SetMass(0);
+	background.SetName("The background");
+
+	planets.push_back(background);
 }
 
 void PlanetFactory::LoadSun(vector<Planet>& planets, GLfloat mass, GLuint& program)

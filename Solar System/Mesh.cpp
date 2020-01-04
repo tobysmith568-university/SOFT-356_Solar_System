@@ -125,7 +125,7 @@ void Mesh::BindTexture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Passes in the texture data
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, material.diffuseTextureMap.GetWidth(), material.diffuseTextureMap.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, material.diffuseTextureMap.GetData());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, material.diffuseTextureMap.GetWidth(), material.diffuseTextureMap.GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, material.diffuseTextureMap.GetData());
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	glUniform1i(glGetUniformLocation(program, "texture1"), 0);

@@ -19,13 +19,14 @@ class Scene
 {
 public:
 	Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
-		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory, TimeUtil& _timeUtil);
+		ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory, TimeUtil& _timeUtil, CameraUtil& _cameraUtil);
 
 	void Update();
 
 private:
 	const GLdouble GRAVITY = 0.00000000006674;
 
+	CameraUtil cameraUtil;
 	ConfigUtil configUtil;
 	FileUtil fileUtil;
 	InputManager& inputManager;

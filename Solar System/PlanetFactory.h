@@ -24,6 +24,7 @@ private:
 	ConfigUtil& configUtil;
 	FileUtil& fileUtil;
 
+	void LoadBackground(std::vector<Planet>& planets, GLuint& program);
 	void LoadSun(std::vector<Planet>& planets, GLfloat mass, GLuint& program);
 	void GetPlanetFromLine(std::vector<Planet>& planets, std::string line, GLuint& program);
 	void ParsePlanetKeyValuePair(Planet& planet, std::string& key, std::string& value);

@@ -21,9 +21,17 @@ vertexShader=shaders/shader.vert
 fragmentShader=shaders/shader.frag
 
 planetFile=planets.dat
+
+backgroundScale=33.0
+backgroundModel=Models/background.obj
+
+sunScale=0.01
 planetModel=Models/planet.obj
 sunModel=Models/sun.obj
-sunScale=0.01
+
+sunScale=0.4
+planetModel=Models/planetHP.obj
+sunModel=Models/sunHP.obj
 
 
 

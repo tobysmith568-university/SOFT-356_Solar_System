@@ -162,6 +162,8 @@ string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
 		return "movementSpeed";
 	case FloatSetting::SunScale:
 		return "sunScale";
+	case FloatSetting::BackgroundScale:
+		return "backgroundScale";
 	default:
 		return "";
 	}
@@ -184,6 +186,8 @@ string ConfigUtil::GetStringValue(StringSetting stringSetting)
 		return "planetModel";
 	case StringSetting::SunModel:
 		return "sunModel";
+	case StringSetting::BackgroundModel:
+		return "backgroundModel";
 	default:
 		return "";
 	}

@@ -18,9 +18,9 @@
 using namespace std;
 
 Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputManager,
-	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory, TimeUtil& _timeUtil)
+	ConsoleUtil& _consoleUtil, ModelLoaderFactory& _modelLoaderFactory, PlanetFactory& _planetFactory, TimeUtil& _timeUtil, CameraUtil& _cameraUtil)
 			: configUtil(_configUtil), fileUtil(_fileUtil), inputManager(_inputManager),
-				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory), planetFactory(_planetFactory), timeUtil(_timeUtil)
+				consoleUtil(_consoleUtil), modelLoaderFactory(_modelLoaderFactory), planetFactory(_planetFactory), timeUtil(_timeUtil), cameraUtil(_cameraUtil)
 {
 	backfaceCull = configUtil.GetBool(BoolSetting::BackfaceCull);// Get some config data
 	physicsEnabled = configUtil.GetBool(BoolSetting::PhysicsEnabled);
@@ -62,16 +62,16 @@ void Scene::Update()
 
 void Scene::UpdatePositions()
 {
-	for (size_t i = 0; i < planets.size(); i++)
+	for (size_t i = 1; i < planets.size(); i++)
 	{
-		if (lockSun && i == 0)
+		if (lockSun && i == 1)
 		{
 			continue;
 		}
 
 		Planet* planet = &planets[i];
 
-		for (size_t ii = 0; ii < planets.size(); ii++)
+		for (size_t ii = 1; ii < planets.size(); ii++)
 		{
 			Planet* otherPlanet = &planets[ii];
 
@@ -203,8 +203,10 @@ void Scene::CreateAndBindShaderProgram()
 
 void Scene::LoadPlanets()
 {
+	string backgroundPath = configUtil.GetString(StringSetting::BackgroundModel);
 	string sunPath = configUtil.GetString(StringSetting::SunModel);
 	string planetPath = configUtil.GetString(StringSetting::PlanetModel);
+	GLfloat backgroundScale = configUtil.GetFloat(FloatSetting::BackgroundScale);
 	GLfloat sunScale = configUtil.GetFloat(FloatSetting::SunScale);
 
 	planets = planetFactory.CreateSolarSystem(program);
@@ -214,12 +216,22 @@ void Scene::LoadPlanets()
 		return;
 	}
 
-	LoadPlanet(planets[0], sunPath);
+	LoadPlanet(planets[0], backgroundPath);
 
 	planets[0].GetModel().GetMVPBuilder()
+		.AddScale(backgroundScale, backgroundScale, backgroundScale);
+
+	if (planets.size() == 1)
+	{
+		return;
+	}
+
+	LoadPlanet(planets[1], sunPath);
+
+	planets[1].GetModel().GetMVPBuilder()
 		.AddScale(sunScale, sunScale, sunScale);
 
-	for (size_t i = 1; i < planets.size(); i++)
+	for (size_t i = 2; i < planets.size(); i++)
 	{
 		LoadPlanet(planets[i], planetPath);
 

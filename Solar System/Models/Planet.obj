@@ -1,4 +1,4 @@
-mtllib Sphere.mtl
+mtllib SolarSystem.mtl
 o Planet
 v 0.000000 19.737080 -0.000000
 v -0.000000 19.357838 -3.850513
