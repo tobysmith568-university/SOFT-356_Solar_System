@@ -112,6 +112,11 @@ void ConfigUtil::CreateDefaultConfigData()
 	{
 		fileUtil.SaveFile(defaultFragmentShaderData, fragmentShaderLocation);
 	}
+
+	if (!fileUtil.DoesFileExist(planetFileLocation))
+	{
+		fileUtil.SaveFile(defaultPlanetData, planetFileLocation);
+	}
 }
 
 // Returns the matching key in the config file for the passed in bool setting enum

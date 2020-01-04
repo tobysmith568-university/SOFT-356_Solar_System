@@ -16,8 +16,8 @@ backgroundA=1
 # Shader Setup
 # ============
 
-vertexShader=shaders/shader.vert
-fragmentShader=shaders/shader.frag
+vertexShader=Shaders/shader.vert
+fragmentShader=Shaders/shader.frag
 
 useWireframes=0
 backfaceCull=0
