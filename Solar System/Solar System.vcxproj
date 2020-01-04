@@ -214,21 +214,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config.dat" />
-    <None Include="Models\Sphere.mtl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </None>
+    <None Include="Models\SolarSystem.mtl" />
     <None Include="packages.config" />
     <None Include="planets.dat" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="Models\Planet.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Object>
-    <Object Include="Models\Sun.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Object>
+    <Media Include="Models\Background.obj">
+      <FileType>Document</FileType>
+    </Media>
+    <Media Include="Models\Planet.obj">
+      <FileType>Document</FileType>
+    </Media>
+    <Media Include="Models\PlanetHP.obj">
+      <FileType>Document</FileType>
+    </Media>
+    <Media Include="Models\Sun.obj">
+      <FileType>Document</FileType>
+    </Media>
+    <Media Include="Models\SunHP.obj">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Models\Stars.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

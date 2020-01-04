@@ -141,10 +141,10 @@
     <None Include="shaders\shader.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Models\Sphere.mtl">
+    <None Include="planets.dat">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="planets.dat">
+    <None Include="Models\SolarSystem.mtl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -235,11 +235,25 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="Models\Planet.obj">
+    <Image Include="Models\Stars.png">
       <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="Models\Sun.obj">
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Models\SunHP.obj">
       <Filter>Resource Files</Filter>
-    </Object>
+    </Media>
+    <Media Include="Models\Sun.obj">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Models\PlanetHP.obj">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Models\Planet.obj">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Models\Background.obj">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
