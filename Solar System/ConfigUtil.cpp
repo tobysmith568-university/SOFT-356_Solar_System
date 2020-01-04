@@ -63,6 +63,11 @@ void ConfigUtil::GetConfigData()
 	{
 		string line = configFile.at(i);
 
+		if (line.length() == 0 || line[0] == '#')
+		{
+			continue;
+		}
+
 		string key = "";
 		string value = "";
 		bool atEquals = false;

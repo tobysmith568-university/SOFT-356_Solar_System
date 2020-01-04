@@ -16,7 +16,7 @@ std::vector<Planet> PlanetFactory::CreateSolarSystem(GLuint& program)
 
 	LoadBackground(planets, program);
 
-	if (planetFile.size() > 0 && planetFile[0][0] != '#')
+	if (planetFile.size() > 0 && planetFile[0].size() > 0 && planetFile[0][0] != '#')
 	{
 		LoadSun(planets, stof(planetFile[0]), program);
 	}
