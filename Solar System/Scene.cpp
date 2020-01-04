@@ -221,6 +221,8 @@ void Scene::LoadPlanets()
 	planets[0].GetModel().GetMVPBuilder()
 		.AddScale(backgroundScale, backgroundScale, backgroundScale);
 
+	planetMementos.push_back(planets[0].CreateMemento());
+
 	if (planets.size() == 1)
 	{
 		return;
@@ -230,6 +232,8 @@ void Scene::LoadPlanets()
 
 	planets[1].GetModel().GetMVPBuilder()
 		.AddScale(sunScale, sunScale, sunScale);
+
+	planetMementos.push_back(planets[1].CreateMemento());
 
 	for (size_t i = 2; i < planets.size(); i++)
 	{
@@ -241,6 +245,8 @@ void Scene::LoadPlanets()
 			.AddScale(sunScale, sunScale, sunScale)
 			.AddScale(radiusScale, radiusScale, radiusScale)
 			.AddTranslation(planets[i].GetStartingDistance(), 0, 0);
+
+		planetMementos.push_back(planets[i].CreateMemento());
 	}
 }
 
@@ -252,8 +258,6 @@ void Scene::LoadPlanet(Planet& planet, string modelPath)
 
 		ml.GetModel(planet.GetModel(), modelPath, program);// Loads in model data using that model loader
 		planet.GetModel().Init();// Inits the OpenGL code within the model
-
-		planetMementos.push_back(planet.CreateMemento());
 	}
 	catch (InvalidModelFileException & ex)
 	{

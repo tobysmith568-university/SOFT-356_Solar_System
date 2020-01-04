@@ -23,6 +23,7 @@ void Planet::RestoreToMemento(PlanetMemento& memento)
 	startingDistance = memento.startingDistance;
 	radiusPercentage = memento.radiusPercentage;
 	velocity = memento.velocity;
+	hasInitialForceApplied = memento.hasInitialForceApplied;
 	model.SetMVPBuilder(memento.mvpBuilder);
 }
 

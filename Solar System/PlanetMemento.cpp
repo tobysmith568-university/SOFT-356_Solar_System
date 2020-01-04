@@ -8,6 +8,8 @@ PlanetMemento::PlanetMemento(Planet* planet)
 	radiusPercentage(planet->radiusPercentage),
 
 	velocity(planet->velocity),
+	hasInitialForceApplied(planet->hasInitialForceApplied),
+
 	mvpBuilder(planet->model.GetMVPBuilder())
 {
 }

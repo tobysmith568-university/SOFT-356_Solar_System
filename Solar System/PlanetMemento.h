@@ -20,5 +20,7 @@ private:
 
 	glm::vec3 velocity;
 
+	bool hasInitialForceApplied;
+
 	MVPBuilder mvpBuilder;
 };
