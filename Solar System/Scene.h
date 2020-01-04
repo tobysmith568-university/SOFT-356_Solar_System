@@ -26,7 +26,7 @@ public:
 private:
 	const GLdouble GRAVITY = 0.00000000006674;
 
-	CameraUtil cameraUtil;
+	CameraUtil& cameraUtil;
 	ConfigUtil configUtil;
 	FileUtil fileUtil;
 	InputManager& inputManager;
