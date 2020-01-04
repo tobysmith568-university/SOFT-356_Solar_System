@@ -8,7 +8,7 @@ InputManager::InputManager(ConfigUtil& _configUtil) : configUtil(_configUtil)
 void InputManager::BindWindow(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);// Sets 'this' as the user pointer to be retrieved in the callback
-	glfwSetKeyCallback(window, [](GLFWwindow * window, GLint key, GLint scancode, GLint action, GLint mode)
+	glfwSetKeyCallback(window, [](GLFWwindow * window, GLint key, GLint scancode, GLint action, GLint mode)// Sets up key callbacks
 	{
 		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
 
@@ -42,7 +42,7 @@ void InputManager::BindWindow(GLFWwindow* window)
 			}
 		}
 	});
-	glfwSetCursorPosCallback(window, [](GLFWwindow* window, GLdouble xpos, GLdouble ypos)
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, GLdouble xpos, GLdouble ypos)// Sets up cursor movement callbacks
 	{
 		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
 
@@ -53,7 +53,7 @@ void InputManager::BindWindow(GLFWwindow* window)
 			callback(xpos, ypos);// Run that callback
 		}
 	});
-	glfwSetScrollCallback(window, [](GLFWwindow* window, GLdouble xoffset, GLdouble yoffset)
+	glfwSetScrollCallback(window, [](GLFWwindow* window, GLdouble xoffset, GLdouble yoffset)// Sets up scrolling callbacks
 	{
 		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
 
@@ -87,11 +87,13 @@ void InputManager::RegisterKeyRelease(KeyBinding keyBinding, std::function<void(
 	keyReleases[key].push_back(callback);
 }
 
+// Registers a new callback function for when the cursor is moved in the current game tick
 void InputManager::RegisterMouseMovement(std::function<void(GLfloat, GLfloat)> callback)
 {
 	mouseMovements.push_back(callback);
 }
 
+// Registers a new callback function for when the user scrolls in the current game tick
 void InputManager::RegisterScrollMovement(std::function<void(GLfloat, GLfloat)> callback)
 {
 	scrollMovements.push_back(callback);

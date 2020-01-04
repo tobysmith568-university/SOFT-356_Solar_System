@@ -7,20 +7,23 @@ using namespace glm;
 CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigUtil& _configUtil)
 	: inputManager(_inputManager), timeUtil(_timeUtil)
 {
-	cameraPos = vec3(3.0f, 3.0f, 0.0f);
+	cameraPos = vec3(3.0f, 3.0f, 0.0f);// Set up the camera's initial position
 	cameraFront = vec3(0.0f, -45.0f, -1.0f);
 	cameraUp = vec3(0.0f, 1.0f, 0.0f);
 
 	pitch = yaw = 0;
+
+	isFPSStyle = _configUtil.GetBool(BoolSetting::StartOnFPSStyle);// Get some data from config
 	cameraSpeed = _configUtil.GetFloat(FloatSetting::MovementSpeed);
 	mouseSpeed = _configUtil.GetFloat(FloatSetting::MouseSpeed);
 	scrollSpeed = _configUtil.GetFloat(FloatSetting::ScrollSpeed);
 
-	SetUpKeyPresses();
+	SetUpKeyPresses();// Set up callbacks
 	SetUpMouseMovement();
 	SetUpMouseScroll();
 }
 
+// Creates a View matrix
 glm::mat4 CameraUtil::GetViewMatrix()
 {
 	if (isFPSStyle)
@@ -50,11 +53,13 @@ glm::mat4 CameraUtil::GetProjectionMatrix()
 	return glm::perspective(fov, aspectRatio, 0.1f, 30.0f);
 }
 
+// Sets the aspect ratio
 void CameraUtil::SetAspectRatio(GLfloat _aspectRatio)
 {
 	aspectRatio = _aspectRatio;
 }
 
+// Registers keypress callbacks
 void CameraUtil::SetUpKeyPresses()
 {
 	inputManager.RegisterKeyRepeat(KeyBinding::MoveForward, [&]()
@@ -83,6 +88,7 @@ void CameraUtil::SetUpKeyPresses()
 		});
 }
 
+// Sets up mouse movement callbacks
 void CameraUtil::SetUpMouseMovement()
 {
 	inputManager.RegisterMouseMovement([&](GLfloat xpos, GLfloat ypos)
@@ -91,6 +97,7 @@ void CameraUtil::SetUpMouseMovement()
 		});
 }
 
+// Sets up scrolling callbacks
 void CameraUtil::SetUpMouseScroll()
 {
 	inputManager.RegisterScrollMovement([&](GLfloat xoffset, GLfloat yoffset)
@@ -99,9 +106,10 @@ void CameraUtil::SetUpMouseScroll()
 		});
 }
 
+// Updates the pitch and yaw based on a given position
 void CameraUtil::UpdatePositions(GLfloat xpos, GLfloat ypos)
 {
-	if (firstRun)
+	if (firstRun)// Adjust the starting values on the first run
 	{
 		lastX = xpos;
 		lastY = ypos;

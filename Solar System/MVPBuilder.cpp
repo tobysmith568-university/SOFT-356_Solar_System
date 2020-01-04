@@ -13,6 +13,7 @@ MVPBuilder::MVPBuilder(CameraUtil& _cameraUtil)
 {
 }
 
+// Returns the translation model
 glm::mat4 MVPBuilder::GetTranslationMatrix()
 {
 	return translationModel;
@@ -39,11 +40,13 @@ MVPBuilder& MVPBuilder::AddTranslation(GLfloat x, GLfloat y, GLfloat z)
 	return *this;
 }
 
+// Returns the projection matrix from the cameraUtil
 glm::mat4 MVPBuilder::BuildP()
 {
 	return cameraUtil.GetProjectionMatrix();
 }
 
+// Returns a combined view and model matrix
 glm::mat4 MVPBuilder::BuildMV()
 {
 	mat4 view = cameraUtil.GetViewMatrix();
@@ -54,7 +57,7 @@ glm::mat4 MVPBuilder::BuildMV()
 	return mv;
 }
 
-// Combines a Projection, a View, and the Translation, Rotation, and Scale matrices
+// Returns a combined Projection, View, Translation, Rotation, and Scale matrix
 mat4 MVPBuilder::BuildMVP()
 {
 	// Adding all matrices up to create combined matrix

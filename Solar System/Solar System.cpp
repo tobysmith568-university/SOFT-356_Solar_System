@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 void RunScene(FileUtil& fileUtil, ConsoleUtil& consoleUtil, ConfigUtil& configUtil, InputManager& inputManager,
 	ModelLoaderFactory& modelLoaderFactory, PlanetFactory& planetFactory, GLFWUtil& glfwUtil, GLEWUtil& glewUtil, TimeUtil& timeUtil, CameraUtil& cameraUtil)
 {
-	consoleUtil.ClearConsole();
+	consoleUtil.ClearConsole();// Makes text appear from the bottom of the console window
 
 	glfwUtil.Init();
 

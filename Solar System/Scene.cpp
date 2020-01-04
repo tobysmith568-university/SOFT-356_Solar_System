@@ -26,7 +26,7 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 	physicsEnabled = configUtil.GetBool(BoolSetting::PhysicsEnabled);
 	lockSun = configUtil.GetBool(BoolSetting::LockSun);
 
-	try
+	try// Configure the scene
 	{
 		CreateAndBindShaderProgram();
 		SetGlobalState();
@@ -45,37 +45,38 @@ Scene::Scene(ConfigUtil& _configUtil, FileUtil& _fileUtil, InputManager& _inputM
 // To be run each game tick
 void Scene::Update()
 {
-	timeUtil.Update();
+	timeUtil.Update();// Update the deltatime
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Clears the previous buffers
 	
-	if (physicsEnabled)
+	if (physicsEnabled)// Update the positions of all the objects
 	{
 		UpdatePositions();
 	}
 
 	for (size_t i = 0; i < planets.size(); i++)// For every planet
 	{
-		planets[i].Update();// Updated the model
+		planets[i].Update();// Update the rendering of and draw all the objects
 	}
 }
 
+// Updates the positions of all the objects
 void Scene::UpdatePositions()
 {
-	for (size_t i = 1; i < planets.size(); i++)
+	for (size_t i = 1; i < planets.size(); i++)// For every object
 	{
-		if (lockSun && i == 1)
+		if (lockSun && i == 1)// If the sun is locked and the sun is the current object, do nothing
 		{
 			continue;
 		}
 
 		Planet* planet = &planets[i];
 
-		for (size_t ii = 1; ii < planets.size(); ii++)
+		for (size_t ii = 1; ii < planets.size(); ii++)// For every other object
 		{
 			Planet* otherPlanet = &planets[ii];
 
-			if (planet == otherPlanet)
+			if (planet == otherPlanet)// Do nothing if the two objects are the same
 			{
 				continue;
 			}
@@ -85,35 +86,36 @@ void Scene::UpdatePositions()
 			GLdouble planet1Mass = (GLdouble)planet->GetMass();
 			GLdouble planet2Mass = (GLdouble)otherPlanet->GetMass();
 
-			if (planetaryDistance < (GLdouble)planet->GetRadiusPercentage() + (GLdouble)otherPlanet->GetRadiusPercentage())
+			if (planetaryDistance < (GLdouble)planet->GetRadiusPercentage() + (GLdouble)otherPlanet->GetRadiusPercentage())// Do nothing if the objects are too close
 			{
 				continue;
 			}
 
-			GLdouble value = (planet1Mass * planet2Mass) / planetaryDistanceSquared;
-			if (value < numeric_limits<GLdouble>::epsilon() || value == numeric_limits<GLdouble>::infinity())
+			GLdouble value = (planet1Mass * planet2Mass) / planetaryDistanceSquared;// Work out the force between the two objects
+
+			if (value < numeric_limits<GLdouble>::epsilon() || value == numeric_limits<GLdouble>::infinity())// Do nothing if the force between the two objects is too small
 			{
 				continue;
 			}
 
-			GLdouble force = GRAVITY * value;
+			GLdouble force = GRAVITY * value;// Multiply the force by the gravitational constant
 
 			vec3 vector = planet->NormalizedVectorTo(*otherPlanet);
 
-			vec3 forceVector = vector * (GLfloat)force;
+			vec3 forceVector = vector * (GLfloat)force;// Get the vector between the two objects
 
-			if (!planet->GetHasInitialForceApplied())
+			if (!planet->GetHasInitialForceApplied())// If the object has not had it's initial force applied
 			{
-				forceVector += vec3(0.0f, 0.0f, planet->GetInitialForce());
+				forceVector += vec3(0.0f, 0.0f, planet->GetInitialForce());// Modify the vector by the initial force
 				planet->SetInitialForceHasBeenApplied();
 			}
 
-			vec3 acceleration = forceVector / planet->GetMass();
+			vec3 acceleration = forceVector / planet->GetMass();// Use the force to create an acceleration difference for this specific object
 
 			vec3 velocity = planet->GetVelocity() + acceleration;
-			planet->SetVelocity(velocity);
+			planet->SetVelocity(velocity);// Modify the objects velocity by the new acceleration
 
-			planet->GetModel().GetMVPBuilder()
+			planet->GetModel().GetMVPBuilder()// Update the objects position by the velocity
 				.AddTranslation(velocity.x, velocity.y, velocity.z);
 		}
 	}
@@ -126,7 +128,7 @@ void Scene::SetGlobalState()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
-	float vAmbientLight[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	float vAmbientLight[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, vAmbientLight);
 	glEnable(GL_LIGHTING);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -134,7 +136,7 @@ void Scene::SetGlobalState()
 	glShadeModel(GL_SMOOTH);
 	glMaterialfv(GL_AMBIENT, GL_SHININESS, vAmbientLight);
 
-	if (backfaceCull)
+	if (backfaceCull)// If backface culling is enabled
 	{
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -155,9 +157,9 @@ void Scene::BindMovements()
 		});
 	inputManager.RegisterKeyRepeat(KeyBinding::Reset, [&]()
 		{
-			for (size_t i = 0; i < planets.size(); i++)
+			for (size_t i = 0; i < planets.size(); i++)// For every object
 			{
-				planets[i].RestoreToMemento(planetMementos[i]);
+				planets[i].RestoreToMemento(planetMementos[i]);// Reset it to it's stored memento
 			}
 		});
 }
@@ -203,50 +205,50 @@ void Scene::CreateAndBindShaderProgram()
 
 void Scene::LoadPlanets()
 {
-	string backgroundPath = configUtil.GetString(StringSetting::BackgroundModel);
+	string backgroundPath = configUtil.GetString(StringSetting::BackgroundModel);// Get some config
 	string sunPath = configUtil.GetString(StringSetting::SunModel);
 	string planetPath = configUtil.GetString(StringSetting::PlanetModel);
 	GLfloat backgroundScale = configUtil.GetFloat(FloatSetting::BackgroundScale);
 	GLfloat sunScale = configUtil.GetFloat(FloatSetting::SunScale);
 
-	planets = planetFactory.CreateSolarSystem(program);
+	planets = planetFactory.CreateSolarSystem(program);// Read in the objects from the planet file
 
 	if (planets.size() == 0)
 	{
 		return;
 	}
 
-	LoadPlanet(planets[0], backgroundPath);
+	LoadPlanet(planets[0], backgroundPath);// Load the background into the first object
 
-	planets[0].GetModel().GetMVPBuilder()
+	planets[0].GetModel().GetMVPBuilder()// Apply the background scale
 		.AddScale(backgroundScale, backgroundScale, backgroundScale);
 
-	planetMementos.push_back(planets[0].CreateMemento());
+	planetMementos.push_back(planets[0].CreateMemento());// Create a backup
 
 	if (planets.size() == 1)
 	{
 		return;
 	}
 
-	LoadPlanet(planets[1], sunPath);
+	LoadPlanet(planets[1], sunPath);// Load the sun into the second object
 
-	planets[1].GetModel().GetMVPBuilder()
+	planets[1].GetModel().GetMVPBuilder()// Apply the sun scale
 		.AddScale(sunScale, sunScale, sunScale);
 
-	planetMementos.push_back(planets[1].CreateMemento());
+	planetMementos.push_back(planets[1].CreateMemento());// Create a backup
 
-	for (size_t i = 2; i < planets.size(); i++)
+	for (size_t i = 2; i < planets.size(); i++)// For every other line in the planet file
 	{
-		LoadPlanet(planets[i], planetPath);
+		LoadPlanet(planets[i], planetPath);// Load it in
 
 		GLfloat radiusScale = planets[i].GetRadiusPercentage();
 
-		planets[i].GetModel().GetMVPBuilder()
+		planets[i].GetModel().GetMVPBuilder()// Set up it's initial scale, relative to the sun scale
 			.AddScale(sunScale, sunScale, sunScale)
 			.AddScale(radiusScale, radiusScale, radiusScale)
-			.AddTranslation(planets[i].GetStartingDistance(), 0, 0);
+			.AddTranslation(planets[i].GetStartingDistance(), 0, 0);// Set up it's initial distance from the sun
 
-		planetMementos.push_back(planets[i].CreateMemento());
+		planetMementos.push_back(planets[i].CreateMemento());// Create a backup
 	}
 }
 

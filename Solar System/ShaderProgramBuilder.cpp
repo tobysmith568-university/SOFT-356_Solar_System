@@ -43,7 +43,7 @@ GLuint* ShaderProgramBuilder::BuildAndUse()
 // Adds any type of shader to the current shader program
 void ShaderProgramBuilder::AddShader(string fileLocation, int shaderType)
 {
-	string source = fileUtil.ReadFile(&fileLocation[0]);
+	string source = fileUtil.ReadFile(&fileLocation[0]);// Read in the source of the shader
 	const GLchar* c_source = source.c_str();
 
 	if (source.size() == 0)
@@ -51,10 +51,10 @@ void ShaderProgramBuilder::AddShader(string fileLocation, int shaderType)
 		throw exception(("The file " + fileLocation +" could not be opened/read, or was empty").c_str());
 	}
 
-	GLuint shader = glCreateShader(shaderType);
+	GLuint shader = glCreateShader(shaderType);// Create the shader
 	glShaderSource(shader, 1, &c_source, NULL);
 
-	glCompileShader(shader);
+	glCompileShader(shader);// Compile the shader
 
 	GLint compiled;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -64,5 +64,5 @@ void ShaderProgramBuilder::AddShader(string fileLocation, int shaderType)
 		throw exception("The shader could not be compiled");
 	}
 
-	glAttachShader(program, shader);
+	glAttachShader(program, shader);// Attach the shader to the shader program
 }

@@ -17,7 +17,7 @@ void GLFWUtil::Init()
 	int windowHeight = configUtil.GetInt(IntSetting::WindowHeight);
 	string windowTitle = configUtil.GetString(StringSetting::WindowTitle);
 
-	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();// Get monitor information
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
@@ -25,7 +25,7 @@ void GLFWUtil::Init()
 	glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-	if (configUtil.GetBool(BoolSetting::FullScreenOnStartup))
+	if (configUtil.GetBool(BoolSetting::FullScreenOnStartup))// If the program should be fullscreen
 	{
 		window = glfwCreateWindow(mode->width, mode->height, &windowTitle[0], monitor, NULL);// Creates a fullscreen window
 		cameraUtil.SetAspectRatio((GLfloat)mode->width / (GLfloat)mode->height);
@@ -36,7 +36,7 @@ void GLFWUtil::Init()
 		cameraUtil.SetAspectRatio((GLfloat)windowWidth / (GLfloat)windowHeight);
 	}
 
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);// Capture the cursor
 
 	glfwMakeContextCurrent(window);
 
