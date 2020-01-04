@@ -1,3 +1,6 @@
+# Window Setup
+# ============
+
 windowWidth=800
 windowHeight=600
 windowTitle=My Window
@@ -8,8 +11,40 @@ backgroundG=0
 backgroundB=0
 backgroundA=1
 
+
+
+# Shader Setup
+# ============
+
+vertexShader=shaders/shader.vert
+fragmentShader=shaders/shader.frag
+
 useWireframes=0
 backfaceCull=0
+
+
+
+# Planet and Model Setup
+# ======================
+
+planetFile=planets.dat
+
+#sunScale=0.01
+sunScale=0.4
+
+#sunModel=Models/sun.obj
+sunModel=Models/sunHP.obj
+
+#planetModel=Models/planet.obj
+planetModel=Models/planetHP.obj
+
+backgroundScale=33.0
+backgroundModel=Models/background.obj
+
+
+
+# Behaviour Setup
+# ===============
 
 physicsEnabled=0
 lockSun=1
@@ -17,23 +52,10 @@ lockSun=1
 startOnFPSStyle=0
 movementSpeed=50
 
-vertexShader=shaders/shader.vert
-fragmentShader=shaders/shader.frag
-
-planetFile=planets.dat
-
-backgroundScale=33.0
-backgroundModel=Models/background.obj
-
-sunScale=0.01
-planetModel=Models/planet.obj
-sunModel=Models/sun.obj
-
-sunScale=0.4
-planetModel=Models/planetHP.obj
-sunModel=Models/sunHP.obj
 
 
+# Keybindings
+# ===========
 
 KeyBinding_Quit=256
 KeyBinding_Reset=82
