@@ -11,7 +11,7 @@ CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigU
 	cameraFront = vec3(0.0f, -45.0f, -1.0f);
 	cameraUp = vec3(0.0f, 1.0f, 0.0f);
 
-	isFPSStyle = _configUtil.GetBool(BoolSetting::StartOnFPSStyle);
+	pitch = yaw = 0;
 	cameraSpeed = _configUtil.GetFloat(FloatSetting::MovementSpeed);
 	mouseSpeed = _configUtil.GetFloat(FloatSetting::MouseSpeed);
 	scrollSpeed = _configUtil.GetFloat(FloatSetting::ScrollSpeed);
@@ -105,8 +105,6 @@ void CameraUtil::UpdatePositions(GLfloat xpos, GLfloat ypos)
 	{
 		lastX = xpos;
 		lastY = ypos;
-		pitch = 0;
-		yaw = 0;
 		firstRun = false;
 	}
 
