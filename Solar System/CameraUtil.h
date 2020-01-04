@@ -25,6 +25,8 @@ private:
 	glm::vec3 cameraUp;
 
 	GLfloat cameraSpeed;
+	GLfloat mouseSpeed;
+	GLfloat scrollSpeed;
 
 	bool firstRun = true;
 	GLfloat lastX;
@@ -35,9 +37,11 @@ private:
 	bool isFPSStyle = false;
 
 	GLfloat aspectRatio;
+	GLfloat fov = 45.0f;
 
 	void SetUpKeyPresses();
 	void SetUpMouseMovement();
+	void SetUpMouseScroll();
 
 	void UpdatePositions(GLfloat xpos, GLfloat ypos);
 };

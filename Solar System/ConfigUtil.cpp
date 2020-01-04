@@ -165,6 +165,10 @@ string ConfigUtil::GetFloatValue(FloatSetting floatSetting)
 		return "backgroundA";
 	case FloatSetting::MovementSpeed:
 		return "movementSpeed";
+	case FloatSetting::MouseSpeed:
+		return "mouseSpeed";
+	case FloatSetting::ScrollSpeed:
+		return "scrollSpeed";
 	case FloatSetting::SunScale:
 		return "sunScale";
 	case FloatSetting::BackgroundScale:

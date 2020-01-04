@@ -51,7 +51,8 @@ lockSun=1
 
 startOnFPSStyle=0
 movementSpeed=50
-
+mouseSpeed=-7
+scrollSpeed=5;
 
 
 # Keybindings

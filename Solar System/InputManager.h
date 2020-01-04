@@ -13,11 +13,13 @@ public:
 	void RegisterKeyRepeat(KeyBinding keyBinding, std::function<void()> callback);
 	void RegisterKeyRelease(KeyBinding keyBinding, std::function<void()> callback);
 	void RegisterMouseMovement(std::function<void(GLfloat, GLfloat)> callback);
+	void RegisterScrollMovement(std::function<void(GLfloat, GLfloat)> callback);
 
 	std::map<int, std::vector<std::function<void()>>> GetKeyPresses();
 	std::map<int, std::vector<std::function<void()>>> GetKeyRepeats();
 	std::map<int, std::vector<std::function<void()>>> GetKeyReleases();
 	std::vector<std::function<void(GLfloat, GLfloat)>> GetMouseMovements();
+	std::vector<std::function<void(GLfloat, GLfloat)>> GetScrollMovements();
 
 private:
 	ConfigUtil& configUtil;
@@ -25,4 +27,5 @@ private:
 	std::map<int, std::vector<std::function<void()>>> keyRepeats;
 	std::map<int, std::vector<std::function<void()>>> keyReleases;
 	std::vector<std::function<void(GLfloat, GLfloat)>> mouseMovements;
+	std::vector<std::function<void(GLfloat, GLfloat)>> scrollMovements;
 };

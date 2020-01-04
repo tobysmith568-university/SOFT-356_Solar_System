@@ -30,6 +30,8 @@ enum class FloatSetting
 	BackgroundB,
 	BackgroundA,
 	MovementSpeed,
+	MouseSpeed,
+	ScrollSpeed,
 	SunScale,
 	BackgroundScale
 };

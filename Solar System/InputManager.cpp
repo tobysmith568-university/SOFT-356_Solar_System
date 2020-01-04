@@ -8,7 +8,7 @@ InputManager::InputManager(ConfigUtil& _configUtil) : configUtil(_configUtil)
 void InputManager::BindWindow(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);// Sets 'this' as the user pointer to be retrieved in the callback
-	glfwSetKeyCallback(window, [](GLFWwindow * window, int key, int scancode, int action, int mode)
+	glfwSetKeyCallback(window, [](GLFWwindow * window, GLint key, GLint scancode, GLint action, GLint mode)
 	{
 		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
 
@@ -42,7 +42,7 @@ void InputManager::BindWindow(GLFWwindow* window)
 			}
 		}
 	});
-	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos)
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, GLdouble xpos, GLdouble ypos)
 	{
 		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
 
@@ -51,6 +51,17 @@ void InputManager::BindWindow(GLFWwindow* window)
 		for (auto& callback : allActions)// For every mouse movement callback
 		{
 			callback(xpos, ypos);// Run that callback
+		}
+	});
+	glfwSetScrollCallback(window, [](GLFWwindow* window, GLdouble xoffset, GLdouble yoffset)
+	{
+		auto& self = *static_cast<InputManager*>(glfwGetWindowUserPointer(window));// Retrive 'this'
+
+		std::vector<std::function<void(GLfloat, GLfloat)>> allActions = self.GetScrollMovements();
+
+		for (auto& callback : allActions)// For every scroll movement callback
+		{
+			callback(xoffset, yoffset);// Run that callback
 		}
 	});
 }
@@ -81,6 +92,11 @@ void InputManager::RegisterMouseMovement(std::function<void(GLfloat, GLfloat)> c
 	mouseMovements.push_back(callback);
 }
 
+void InputManager::RegisterScrollMovement(std::function<void(GLfloat, GLfloat)> callback)
+{
+	scrollMovements.push_back(callback);
+}
+
 std::map<int, std::vector<std::function<void()>>> InputManager::GetKeyPresses()
 {
 	return keyPresses;
@@ -99,4 +115,9 @@ std::map<int, std::vector<std::function<void()>>> InputManager::GetKeyReleases()
 std::vector<std::function<void(GLfloat, GLfloat)>> InputManager::GetMouseMovements()
 {
 	return mouseMovements;
+}
+
+std::vector<std::function<void(GLfloat, GLfloat)>> InputManager::GetScrollMovements()
+{
+	return scrollMovements;
 }

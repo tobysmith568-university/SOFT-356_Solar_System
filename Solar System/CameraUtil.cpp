@@ -7,26 +7,18 @@ using namespace glm;
 CameraUtil::CameraUtil(InputManager& _inputManager, TimeUtil& _timeUtil, ConfigUtil& _configUtil)
 	: inputManager(_inputManager), timeUtil(_timeUtil)
 {
-	//Start beside looking forward
-	/*cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);*/
-
-	//Start above looking down
-	/*cameraPos = vec3(0.0f, 3.0f, 0.0f);
-	cameraFront = vec3(0.0f, -90.0f, -1.0f);
-	cameraUp = vec3(0.0f, 1.0f, 0.0f);*/
-
-	//Start beside and above looking diagonally down
 	cameraPos = vec3(3.0f, 3.0f, 0.0f);
 	cameraFront = vec3(0.0f, -45.0f, -1.0f);
 	cameraUp = vec3(0.0f, 1.0f, 0.0f);
 
 	isFPSStyle = _configUtil.GetBool(BoolSetting::StartOnFPSStyle);
 	cameraSpeed = _configUtil.GetFloat(FloatSetting::MovementSpeed);
+	mouseSpeed = _configUtil.GetFloat(FloatSetting::MouseSpeed);
+	scrollSpeed = _configUtil.GetFloat(FloatSetting::ScrollSpeed);
 
 	SetUpKeyPresses();
 	SetUpMouseMovement();
+	SetUpMouseScroll();
 }
 
 glm::mat4 CameraUtil::GetViewMatrix()
@@ -55,7 +47,7 @@ glm::mat4 CameraUtil::GetViewMatrix()
 // Creating a projection matrix
 glm::mat4 CameraUtil::GetProjectionMatrix()
 {
-	return glm::perspective(45.0f, aspectRatio, 0.1f, 30.0f);
+	return glm::perspective(fov, aspectRatio, 0.1f, 30.0f);
 }
 
 void CameraUtil::SetAspectRatio(GLfloat _aspectRatio)
@@ -99,6 +91,14 @@ void CameraUtil::SetUpMouseMovement()
 		});
 }
 
+void CameraUtil::SetUpMouseScroll()
+{
+	inputManager.RegisterScrollMovement([&](GLfloat xoffset, GLfloat yoffset)
+		{
+			fov += yoffset * scrollSpeed * timeUtil.GetDeltaTime();
+		});
+}
+
 void CameraUtil::UpdatePositions(GLfloat xpos, GLfloat ypos)
 {
 	if (firstRun)
@@ -115,9 +115,8 @@ void CameraUtil::UpdatePositions(GLfloat xpos, GLfloat ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	GLfloat sensitivity = -7;
-	xoffset *= sensitivity * timeUtil.GetDeltaTime();
-	yoffset *= sensitivity * timeUtil.GetDeltaTime();
+	xoffset *= mouseSpeed * timeUtil.GetDeltaTime();
+	yoffset *= mouseSpeed * timeUtil.GetDeltaTime();
 
 	yaw += xoffset;
 	pitch += yoffset;
