@@ -1,7 +1,11 @@
 # SOFT-356_Solar-System
 
-Solar system simulator with accurate gravity **without** using a physics engine dependancy.
+Solar system simulator with accurate gravity **without** using a physics engine as a dependency.  
 Repository is at https://github.com/tobysmith568/SOFT-356_Solar_System
+
+**For the quickest setup:**  
+ - **If you clone this repository in full then the sofware will work instantly in debug mode from within Visual Studio after following the steps in the [Compilation](#compilation) section.**
+ - **If you compile and wish to use the `.exe` then you should take the [`config.dat`](Solar%20System/config.dat) and [`planets.dat`](Solar%20System/planets.dat) files from this repo as well as the [`Models`](Solar%20System/Models) and [`Shaders`](Solar%20System/Shaders) directories. Both files and both folders should be placed next to the `.exe`.**
 
 ## Software and Libraries
 - Visual Studio 2019 v16.3.9
@@ -26,13 +30,11 @@ All the functionality of this software is configurable via the [config.dat file]
 Config within that file is a list of key/value pairs and sits in the following categories:
 - Window Setup
 - Shader Setup
-- Planet and Model Setup
-- Behaviour Setup
-- Keybindings
+- [Planet and Model Setup](#planet-and-model-setup)
+- [Behaviour Setup](#behaviour-setup)
+- [Keybindings](#keybindings)
 
 Boolean options evaluate to `true` if they are equal to `1`, else they are `false`.
-
-Amongst other things, this file gives the location of other files such as shaders, planet data, and models. **For the quickest setup, you should take the [`config.dat`](Solar%20System/config.dat) and [`planets.dat`](Solar%20System/planets.dat) files from this repo as well as the [`Models`](Solar%20System/Models) and [`Shaders`](Solar%20System/Shaders) directories. Both files and both folders should be placed next to the `.exe`.**
 
 ##### Planet and Model Setup
 
@@ -40,12 +42,12 @@ This section of the config file configures the planets. `planetFile` should be a
 
 ##### Behaviour Setup
 
- - `physicsEnabled`: `True` means that physics will be enabled when the program starts. This can also be toggled at runtime with a keybinding.
- - `lockSun`: This will lock the sun in place; other objects will have no gravatational effect on it but it will still effect them. While this is not realistic, it creates more stable orbits.
- - `startOnFPSStyle`: `True` will start the camera in an FPS style mode, `False` will start in an orbit mode. This can also be toggled at runtime with a keybinding.
- - `movementSpeed`: The movement sensitivity when in FPS mode.
- - `mouseSpeed`: The mouse 'looking' sensitivity for both camera types.
- - `scrollSpeed`: The zooming in and out sensitivity.
+ - `physicsEnabled`: `True` means that physics will be enabled when the program starts. This can also be toggled at runtime with a keybinding
+ - `lockSun`: This will lock the sun in place; other objects will have no gravatational effect on it but it will still effect them. While this is not realistic, it creates more stable orbits
+ - `startOnFPSStyle`: `True` will start the camera in an FPS style mode, `False` will start in an orbit mode. This can also be toggled at runtime with a keybinding
+ - `movementSpeed`: The movement sensitivity when in FPS mode
+ - `mouseSpeed`: The mouse 'looking' sensitivity for both camera types
+ - `scrollSpeed`: The zooming in and out sensitivity
 
 ##### Keybindings
 
@@ -64,4 +66,11 @@ The mouse scroll wheel can also be used to zoom in and out.
 
 #### Planets.dat
 
-This file describes the solar system that the program will create. The first line of the file is to set up the sun. This is only a single number and is the weight of the sun in KG.
+This file describes the solar system that the program will create. The first line of the file is to set up the sun. This is only a single number and it is the weight of the sun in kilograms.  
+Each following line in the file represents a planet. Planet lines can be commented out by placing a hash (`#`) at the very begining of the line. The keys can be in any order or can be omitted, they are:
+
+ - `name`: Not currently used by the program but allows you to label the planet within the file
+ - `mass`: This is the mass of the planet in kilograms
+ - `distance`: This is the initial distance for the centre of the planet to be from the center of the sun in metres
+ - `radius`: This is a multiplier for how large this planet should be represented in the scene relative to the sun. Eg: `1` means the planet will be graphically be the same size as the sun, `0.5` means the planet will be shown to be half the size of the sun
+ - `initialForce`: This is a force applied to the planet one time when after physics is initially enabled, or after the scene is reset. This force is applied into the calculations before the mass of the planet is factored. This means the same force can be applied to two different planets of different masses
