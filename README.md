@@ -38,7 +38,7 @@ Boolean options evaluate to `true` if they are equal to `1`, else they are `fals
 
 ##### Planet and Model Setup
 
-This section of the config file configures the planets. `planetFile` should be a path to a planet file. `sunModel`, `planetModel`, and `backgroundModel` should all be paths to `.obj` files for the scene to use. By default this repo comes with some lower-poly and higher-poly models, either can be commented in/out to change the programs fuctionality. While they take longer to load, the higher-poly models are recommended. `sunScale` and `backgroundScale` tell the program how it should scale up/down these models; the default values given are ideal for the default model files.
+This section of the config file configures the planets. `planetFile` should be a path to a planet file. `sunModel`, `planetModel`, and `backgroundModel` should all be paths to `.obj` files for the scene to use. By default this repo comes with some lower-poly and higher-poly models, either can be commented in/out to change the programs fuctionality. The low-poly models should take about 3 seconds to load in while the higher-poly models should take around 10-12 seconds. While they take longer to load, the higher-poly models are recommended. `sunScale` and `backgroundScale` tell the program how it should scale up/down these models; the default values given are ideal for the default model files.
 
 ##### Behaviour Setup
 
@@ -74,3 +74,49 @@ Each following line in the file represents a planet. Planet lines can be comment
  - `distance`: This is the initial distance for the centre of the planet to be from the center of the sun in metres
  - `radius`: This is a multiplier for how large this planet should be represented in the scene relative to the sun. Eg: `1` means the planet will be graphically be the same size as the sun, `0.5` means the planet will be shown to be half the size of the sun
  - `initialForce`: This is a force applied to the planet one time when after physics is initially enabled, or after the scene is reset. This force is applied into the calculations before the mass of the planet is factored. This means the same force can be applied to two different planets of different masses
+
+## Code Structure
+
+### Utilities
+
+Large amounts of functionality within the program is broken down and encapsulated within utility classes:
+- `CameraUtil`: Used to manipulate the view matrix
+- `ConfigUtil`: Used to read from the config.dat file
+- `ConsoleUtil`: Used to read from and write to the console window
+- `FileUtil`: Used for many different actions for interacting with files, folders, and file paths
+- `GLEWUtil`: Used to interact with the GLEW library
+- `GLFWUtil`: Used to interact with the GLFW library
+- `InputManager`: Used to register mouse and keyboard interactions as well as execute callback functions when those actions occur
+- `ModelLoaderFactory`: Used to return a model loader based on the file path it is given
+- `MVPBuilder`: Used for a few different calculations involving a model's MVP. This also keeps track of a model's position, rotation, and scale
+- `PlanetFactory`: Used to load in all the data contained witin the [planets.dat](Solar%20System/planets.dat) file into `Planet` objects
+- `ShaderProgramBuilder`: Used to compile and register shader programs
+- `TimeUtil`: Used to keep track of the current delta time
+
+The majority of utility classes are instantiated once within the main method and are then passed around wherever they are needed via constructor dependency injection. Many of these classes rely on others.
+
+### Core
+
+The core program is broken down into the following structure:
+
+ - Scene
+	  - Shader Program
+   - Gravity logic
+   - Planets[]
+	    - Model
+		     - Materials[]
+		     - MVP
+		     - Objects[]
+			      - Meshes[]
+
+Details:
+
+- There is a single `Scene` within the program, this represents what the user sees
+- The `Shader Program` sits at the `Scene` level and remains constant after init
+- The different `Planet`s all sit within the `Scene`. While the word planet is always used, this technically also refers to the sun and the background.
+- Once per game tick, when the `Scene` is updated it manupulates the `Planet`s using it's gravity implementation and then also calls an update method on all of the `Planet`s
+- A `Planet` stores information used in physics calculations as well as stores a single `Model`
+- A `Model` holds all the different `Material`s that any of its child `Object`s might use
+- A `Model` has an MVP and it sets this as the current one each game tick before it then calls an update method on all of it's `Objects`
+- `Objects` only act as a container for `Mesh`es. They exist to mirror the structure found within different model file types. When an `Object` is updated it must update all of it's `Mesh`es
+- A `Mesh` contains the data required for OpenGL to render something. It also has references to a single `Material` and the `Shader program`
