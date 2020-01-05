@@ -1,7 +1,8 @@
 # SOFT-356_Solar-System
 
 Solar system simulator with accurate gravity **without** using a physics engine as a dependency.  
-This repository is at https://github.com/tobysmith568/SOFT-356_Solar_System
+This repository is at https://github.com/tobysmith568/SOFT-356_Solar_System  
+Video report is at https://drive.google.com/open?id=1nx_LxbCpoDKki8jtrdrLewbKNt7wg1j8
 
 **For the quickest setup:**  
  - **If you clone this repository in full, then the software will work instantly in debug mode from within Visual Studio after following the steps in the [Compilation](#compilation) section.**
