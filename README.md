@@ -128,4 +128,4 @@ While having never worked directly with one in C++ and OpenGL, I have assumed th
 
 While all the measurements are accurate, the 'physical' sizes of the objects are not. By this, I mean that the mass of a planet does not affect its size, and its size does not affect the mass or movements. This allows for a user to configure the program to use any model file without it affecting the physics. Any model can also be rendered in any proportional size.
 
-This project is originally based off of my model loading project [found on Github here](https://github.com/tobysmith568/SOFT-356_Model_Loader).
+This project is originally based off of my model loading project [found on Github here](https://github.com/tobysmith568/SOFT-356_Model_Loader). The shared functionality is the ability to load `.obj` models into memory and the method in which models are then rendered using OpenGL. The shaders currently implemented are also sourced from the [SOFT356 SampleCode](https://github.com/SOFT356/SampleCode).
